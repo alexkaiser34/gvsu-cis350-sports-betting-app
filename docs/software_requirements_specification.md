@@ -14,10 +14,8 @@ The purpose of this document is to track all our functional and non-functional r
 > 2.1 The application shall have a page displaying all possible football games to bet on for the upcoming week in a table format.
 <br> 2.2 Users shall be able to place bets on football games.
 <br> 2.3 Users shall receive a confirmation via the dashboard of their bet with details of the selected football game(s).
-<br> 2.4 The application shall display current credit balance.
-<br> 2.5 The application shall display an interactive list of active and previous bets for the user on the home page.
-<br> 2.6 The users bets shall be allowed to be sorted by date or game.
-<br> 2.7 The user shall get 100 free credits every 24 hours.
+<br> 2.4 The application shall display an interactive list of active and previous bets for the user on the home page.
+<br> 2.5 The users bets shall be allowed to be sorted by date or game.
 
 # Non-Functional Requirements
 **1. Security**
