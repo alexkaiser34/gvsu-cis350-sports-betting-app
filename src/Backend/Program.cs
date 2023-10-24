@@ -1,12 +1,15 @@
 ﻿using Backend.Models;
 using Backend.Services;
-using Newtonsoft.Json;
 
-var api = new OddsAPI(new JsonHelper().getApiKey());
-var tmp = await api.makeRequest<GameBet>("/americanfootball_nfl/odds");
+var apiHelper = new ApiHelper();
 
-foreach (GameBet i in tmp)
-{
-    Console.WriteLine(JsonConvert.SerializeObject(i, Formatting.Indented));
-}
+var odds = await apiHelper.getUpcomingOdds();
+
+apiHelper.printItems<GameOdd>(odds);
+
+//var scores = await apiHelper.getRecentScores();
+
+//apiHelper.printItems<GameScore>(scores);
+
+
 

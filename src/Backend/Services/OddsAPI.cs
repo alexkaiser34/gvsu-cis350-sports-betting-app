@@ -3,10 +3,10 @@ using Newtonsoft.Json;
 
 namespace Backend.Services
 {
-    public interface IQueryParam
+    public class QueryParam
     {
-        string key { get; set; }
-        string value { get; set; }
+        public string key { get; set; }
+        public string value { get; set; }
 
     }
 
@@ -19,7 +19,6 @@ namespace Backend.Services
             _restClient = new RestClient(_baseUrl);
             _restClient.AddDefaultHeader("Content-Type", "application/json");
             _restClient.AddDefaultQueryParameter("apiKey", apiKey);
-            _restClient.AddDefaultQueryParameter("regions", "us");
         }
 
         public void addHeader(string key, string value)
@@ -32,7 +31,7 @@ namespace Backend.Services
             _restClient.AddDefaultQueryParameter(key, value);
         }
 
-        public async Task<IEnumerable<T>> makeRequest<T>(string subURL, List<IQueryParam>? queryParams = null)
+        public async Task<IEnumerable<T>> makeRequest<T>(string subURL, List<QueryParam>? queryParams = null)
         {
             var req = new RestRequest()
             {
@@ -43,7 +42,7 @@ namespace Backend.Services
 
             if (queryParams != null)
             {
-                foreach (IQueryParam qp in queryParams)
+                foreach (QueryParam qp in queryParams)
                 {
                     req.AddQueryParameter(qp.key, qp.value);
                 }
