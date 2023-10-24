@@ -1,0 +1,25 @@
+Team name: Team Awesome
+
+Members present:Alex K, Svens, Alex C
+
+Date: 10/24/23
+
+Time: 3:30
+
+Discussion points:
+
+- Distribute and clarify tasks.
+- Understand external database format for 
+keeping track of games and user login info.
+- Possibilities of implimenting graphs using the data inputs (after
+everything is done).
+* Use cache for data youre acessing multiple times.
+- Bootstrapping for website formatting and aesthetics
+
+
+Goals for next week (include responsibilities)
+- Work on tasks with front end
+* Make it functional first, stylized second.
+- Prioritize Bootstrap to WebApp.
+- Create Navbar in web app.
+
