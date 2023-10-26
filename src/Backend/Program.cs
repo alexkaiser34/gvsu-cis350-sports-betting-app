@@ -1,14 +1,10 @@
-﻿using Backend.Models;
+﻿using System;
 using Backend.Services;
 
-var jsonHelper = new JsonHelper();
-var dbHelper = new DbHelper(jsonHelper.getAwsKeys());
-var apiHelper = new ApiHelper(jsonHelper.getApiKey());
+var app = new App();
 
-var scores = await apiHelper.getRecentScores();
-await dbHelper.Post(scores);
-var odds = await apiHelper.getUpcomingOdds();
-await dbHelper.Post(odds);
+await app.updateScores();
+await app.updateOdds();
 
 
 
