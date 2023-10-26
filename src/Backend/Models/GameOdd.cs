@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Amazon.DynamoDBv2.DataModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Backend.Models
 {
@@ -29,6 +30,8 @@ namespace Backend.Models
 
         public Market[] markets { get; set; }
     }
+
+    [DynamoDBTable("GameOdds")]
     internal class GameOdd
     {
         [Required]
