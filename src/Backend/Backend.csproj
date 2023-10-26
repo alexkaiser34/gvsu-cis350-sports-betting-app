@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.203.9" />
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="7.0.12" />
     <PackageReference Include="RestSharp" Version="110.2.0" />
   </ItemGroup>
