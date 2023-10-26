@@ -3,9 +3,21 @@
 namespace Backend.Services
 {
 
+    public class AwsKeys
+    {
+        public string accessKey { get; set; }
+
+        public string secretKey { get; set; }
+
+    }
+
     public class IJsonAppData
     {
         public string apiKey { get; set; }
+
+        public AwsKeys awsKeys { get; set; }
+
+        
     }
     internal class JsonHelper
     {
@@ -27,6 +39,11 @@ namespace Backend.Services
         public string getApiKey()
         {
             return _data.apiKey;
+        }
+
+        public AwsKeys getAwsKeys()
+        {
+            return _data.awsKeys;
         }
     }
 }

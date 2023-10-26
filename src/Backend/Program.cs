@@ -1,7 +1,9 @@
 ﻿using Backend.Models;
 using Backend.Services;
 
-var apiHelper = new ApiHelper();
+var jsonHelper = new JsonHelper();
+
+var apiHelper = new ApiHelper(jsonHelper.getApiKey());
 
 var odds = await apiHelper.getUpcomingOdds();
 
