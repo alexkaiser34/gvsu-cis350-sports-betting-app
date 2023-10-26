@@ -7,8 +7,8 @@ namespace Backend.Services
     {
         private readonly OddsAPI _api;
 
-        public ApiHelper() {
-            _api = new OddsAPI(new JsonHelper().getApiKey());
+        public ApiHelper(string apiKey) {
+            _api = new OddsAPI(apiKey);
         }
 
         public async Task<IEnumerable<GameScore>> getRecentScores()
