@@ -1,9 +1,7 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
-using Amazon.DynamoDBv2.DocumentModel;
 using API.Models;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
-using System.Reflection;
 
 namespace API.Controllers
 {
@@ -12,22 +10,28 @@ namespace API.Controllers
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
-        private IDynamoDBContext _dbContext;
+        private readonly DbService<User> _dbService;
+
 
         public UserController(
             IDynamoDBContext dynamoDBContext,
             ILogger<UserController> logger)
         {
+            _dbService = new DbService<User>(dynamoDBContext);
             _logger = logger;
-            _dbContext = dynamoDBContext;
         }
 
         [HttpGet]
         public async Task<IEnumerable<User>> GetAll()
         {
-            IEnumerable<ScanCondition> conditions = Enumerable.Empty<ScanCondition>();
-            var scan = await _dbContext.ScanAsync<User>(conditions).GetRemainingAsync();
-            return scan;
+            return await _dbService.GetAll();
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IEnumerable<User>> GetByID(string id = "123")
+        {
+            return await _dbService.GetByID(id);
         }
 
         [HttpPost]
@@ -41,7 +45,7 @@ namespace API.Controllers
 
             /** Auto increment ID **/
             IEnumerable<ScanCondition> conditions = Enumerable.Empty<ScanCondition>();
-            var scan = await _dbContext.ScanAsync<User>(conditions).GetRemainingAsync();
+            var scan = await _dbService.dbContext.ScanAsync<User>(conditions).GetRemainingAsync();
             User newUser = new User()
             {
                 UserName = inputUser.UserName,
@@ -50,21 +54,22 @@ namespace API.Controllers
                 lastName = inputUser.lastName,
                 Password = inputUser.Password
             };
-
-            for (int i = 1; i < scan.Count; i++)
+            List<int> ids = new List<int>();
+            for (int i = 0; i < scan.Count; i++)
             {
-                /** assign next available ID to user **/
-                if (Int32.Parse(scan[i].id) != i)
+                ids.Add(Int32.Parse(scan[i].id));
+            }
+
+            for (int i = 0; i <= scan.Count + 1; i++)
+            {
+                if (!ids.Contains(i))
                 {
+                    /** assign ID **/
                     newUser.id = i.ToString();
-                    await _dbContext.SaveAsync<User>(newUser);
+                    await _dbService.dbContext.SaveAsync<User>(newUser);
                     return;
                 }
             }
-
-            /** increment ID **/
-            newUser.id = (scan.Count+1).ToString();
-            await _dbContext.SaveAsync<User>(newUser);
 
         }
 
@@ -74,17 +79,13 @@ namespace API.Controllers
         {
             /** For some reason, we can not just delete by the primary key directly
              * We have to load the object by ID, and then store it and delete it **/
-            List<User> tmp = await _dbContext.QueryAsync<User>(id).GetRemainingAsync();
-            await _dbContext.DeleteAsync<User>(tmp[0]);
+            List<User> tmp = await _dbService.dbContext.QueryAsync<User>(id).GetRemainingAsync();
+            if (tmp.Count > 0)
+            {
+                await _dbService.dbContext.DeleteAsync<User>(tmp[0]);
+            }
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<IEnumerable<User>> GetByID(string id = "123")
-        {
-            return await _dbContext
-                .QueryAsync<User>(id)
-                .GetRemainingAsync();
-        }
+        
     }
 }
