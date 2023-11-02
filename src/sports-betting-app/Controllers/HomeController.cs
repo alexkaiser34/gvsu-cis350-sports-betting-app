@@ -28,36 +28,6 @@ namespace sports_betting_app.Controllers
             return View();
         }
 
-        public void ThemeChange()
-        {
-            /** Parse theme cookie **/
-            if (Request.Cookies.ContainsKey("Theme"))
-            {
-                foreach (var cookie in Request.Cookies)
-                {
-                    if (cookie.Key == "Theme")
-                    {
-                        var color = cookie.Value == "Dark" ? "Light" : "Dark";
-
-                        /** toggle cookie value **/
-                        var cookieOps = new CookieOptions();
-                        cookieOps.Expires = DateTime.Now.AddDays(1);
-                        Response.Cookies.Append(cookie.Key, color);
-                    }
-                }
-            }
-            else
-            {
-                /** Default color is light, so make dark on first round **/
-                Response.Cookies.Append("Theme", "Dark");
-            }
-
-            /** redirect to main page
-             * NOTE: we will want to redirect to whichever page they are currently on 
-             */
-            Response.Redirect("/", false);
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
