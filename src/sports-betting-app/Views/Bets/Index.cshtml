@@ -1,9 +1,42 @@
-﻿@model string
+﻿@model IEnumerable<GameOdd>
 @{
     ViewData["Title"] = "Bets Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@Model</h1>
-    <p>This is the Bets page.</p>
-</div>
+<table class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Away Team
+            </th>
+            <th>
+                Home Team
+            </th>
+            <th>
+                Commence Time
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var obj in Model)
+        {
+            <tr>
+                <td>
+                    <h3>@obj.id</h3>
+                </td>
+                <td>
+                    <h3>@obj.away_team</h3>
+                </td>
+                <td>
+                    <h3>@obj.home_team</h3>
+                </td>
+                <td>
+                    <h3>@obj.commence_time</h3>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

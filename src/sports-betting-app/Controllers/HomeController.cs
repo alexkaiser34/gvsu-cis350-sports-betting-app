@@ -3,16 +3,18 @@ using sports_betting_app.Models;
 using System.Diagnostics;
 using RestSharp;
 using System.Web;
+using Microsoft.AspNetCore.Http.Extensions;
+using sports_betting_app.Data;
 
 namespace sports_betting_app.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IAPIClientService<GameOdd> _api;
+        public HomeController(IAPIClientService<GameOdd> api)
         {
-            _logger = logger;
+            _api = api;
         }
 
         public IActionResult Index()

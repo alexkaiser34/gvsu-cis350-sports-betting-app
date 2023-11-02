@@ -4,20 +4,19 @@ using sports_betting_app.Models;
 
 namespace sports_betting_app.Controllers
 {
-    public class HistoryController : Controller
+    public class SettingsController : Controller
     {
 
-        private readonly IAPIClientService<GameScore> _api;
+        private readonly IAPIClientService<User> _api;
 
-        public HistoryController(IAPIClientService<GameScore> api)
+        public SettingsController(IAPIClientService<User> api)
         {
             _api = api;
         }
-
-
+    
         public IActionResult Index()
         {
-            string data = "History page";
+            string data = "Settings page";
             return View((object)data);
         }
     }

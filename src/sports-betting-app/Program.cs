@@ -1,7 +1,13 @@
+using RestSharp;
+using sports_betting_app.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// add generic api service to container
+builder.Services.AddScoped(typeof(IAPIClientService<>), typeof(ApplicationAPIContext<>));
 
 var app = builder.Build();
 
