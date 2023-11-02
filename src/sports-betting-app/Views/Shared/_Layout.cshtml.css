@@ -23,6 +23,11 @@ for details on configuring this project to bundle and minify static web assets. 
   border-color: #1861ac;
 }*/
 
+#themeLink {
+    border: 2px solid white;
+    outline: 2px solid white;
+}
+
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
