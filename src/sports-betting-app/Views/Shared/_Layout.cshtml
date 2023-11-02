@@ -18,6 +18,7 @@
             {
                 if (cookie.Value == "Dark")
                 {
+                    /** the style sheet links determine the theme of the application */
                     <link rel="stylesheet" href="~/css/dark.css" asp-append-version="true" />
                 }
                 else
@@ -75,8 +76,8 @@
                                         <i class="bi bi-person-circle h2"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end bg-primary" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" asp-controller="Settings">Settings</a>
-                                        <a class="dropdown-item" asp-controller="SignUp">Sign up</a>
+                                        <a class="dropdown-item" asp-controller="Settings" asp-action="Index">Settings</a>
+                                        <a class="dropdown-item" asp-controller="UserRegistration" asp-action="Index">Sign up</a>
                                     </div>
                                 </li>
                             </ul>
@@ -116,8 +117,8 @@
                                         <i class="bi bi-person-circle h2"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end bg-light" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" asp-controller="Settings">Settings</a>
-                                        <a class="dropdown-item" asp-controller="SignUp">Sign up</a>
+                                        <a class="dropdown-item" asp-controller="Settings" asp-action="Index">Settings</a>
+                                        <a class="dropdown-item" asp-controller="UserRegistration" asp-action="Index">Sign up</a>
                                     </div>
                                 </li>
                             </ul>
