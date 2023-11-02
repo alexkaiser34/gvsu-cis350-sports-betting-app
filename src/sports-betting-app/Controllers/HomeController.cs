@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using sports_betting_app.Models;
 using System.Diagnostics;
+using RestSharp;
+using System.Web;
 
 namespace sports_betting_app.Controllers
 {
@@ -22,6 +24,43 @@ namespace sports_betting_app.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public void ThemeChange()
+        {
+            /** Parse theme cookie **/
+            if (Request.Cookies.ContainsKey("Theme"))
+            {
+                foreach (var cookie in Request.Cookies)
+                {
+                    if (cookie.Key == "Theme")
+                    {
+                        var color = "Light";
+                        if (cookie.Value == "Dark")
+                        {
+                            color = "Light";
+                        }
+                        else
+                        {
+                            color = "Dark";
+                        }
+
+                        /** toggle cookie value **/
+                        var cookieOps = new CookieOptions();
+                        cookieOps.Expires = DateTime.Now.AddDays(1);
+                        Response.Cookies.Append(cookie.Key, color);
+                    }
+                }
+            }
+            else
+            {
+                Response.Cookies.Append("Theme", "dark");
+            }
+
+            /** redirect to main page
+             * NOTE: we will want to redirect to whichever page they are currently on 
+             */
+            Response.Redirect("/", false);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
