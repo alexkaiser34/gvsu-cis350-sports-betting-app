@@ -1,9 +1,94 @@
-﻿@model string
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@Model</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center hero-section">
+    <h1 class="display-4">sports_betting_app</h1>
+    <p class="lead">Enhance your sports betting with strategy and analysis.</p>
+    <a href="#learn-more" class="btn btn-primary btn-lg">Learn More</a>
 </div>
+
+<section id="learn-more" class="container my-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h2>Analysis</h2>
+                <p>Access insights and data-driven analysis to make informed bets.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h2>Strategies</h2>
+                <p>Discover winning strategies and improve your betting success rate.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h2>Community</h2>
+                <p>Engage with a community of sports betting enthusiasts.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container my-5">
+    <h2 class="text-center mb-4">##### Jump down ##### | Upcoming Events</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="event-card">
+                <img src="event1.jpg" class="card-img-top" alt="Event 1">
+                <div class="card-body">
+                    <h5 class="card-title">Football Match</h5>
+                    <p class="card-text">Join the discussion on the upcoming football match and get tips from experts.</p>
+                    <a href="#" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="event-card">
+                <img src="event2.jpg" class="card-img-top" alt="Event 2">
+                <div class="card-body">
+                    <h5 class="card-title">Football Match</h5>
+                    <p class="card-text">Join the discussion on the upcoming football match and get tips from experts.</p>
+                    <a href="#" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container my-5">
+    <h2 class="text-center mb-4">##### Jump down (potentially new page?) ##### | Latest News</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="news-card">
+                <img src="news1.jpg" class="card-img-top" alt="News 1">
+                <div class="card-body">
+                    <h5 class="card-title">New Betting Strategy</h5>
+                    <p class="card-text">Learn about a groundbreaking betting strategy that's gaining popularity among bettors.</p>
+                    <a href="#" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="news-card">
+                <img src="news2.jpg" class="card-img-top" alt="News 2">
+                <div class="card-body">
+                    <h5 class="card-title">Sports Betting Trends</h5>
+                    <p class="card-text">Stay updated on the latest trends and developments in the world of sports betting.</p>
+                    <a href="#" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="news-card">
+                <img src="news3.jpg" class="card-img-top" alt="News 3">
+                <div class="card-body">
+                    <h5 class="card-title">Community Spotlight</h5>
+                    <p class="card-text">Highlighting a community member's successful betting story and tips.</p>
+                    <a href="#" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
