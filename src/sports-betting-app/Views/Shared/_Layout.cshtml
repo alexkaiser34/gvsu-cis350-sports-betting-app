@@ -11,22 +11,34 @@
 
 
     @{
+
         // use cookie to keep theme specified by user, will expire after one day
-        foreach (var cookie in Context.Request.Cookies)
+        var exists = Context.Request.Cookies.ContainsKey("Theme");
+
+        if (exists)
         {
-            if (cookie.Key == "Theme")
+            foreach (var cookie in Context.Request.Cookies)
             {
-                if (cookie.Value == "Dark")
+                if (cookie.Key == "Theme")
                 {
-                    /** the style sheet links determine the theme of the application */
-                    <link rel="stylesheet" href="~/css/dark.css" asp-append-version="true" />
+                    exists = true;
+                    if (cookie.Value == "Dark")
+                    {
+                        /** the style sheet links determine the theme of the application */
+                        <link rel="stylesheet" href="~/css/dark.css" asp-append-version="true" />
+                    }
+                    else
+                    {
+                        <link rel="stylesheet" href="~/css/light.css" asp-append-version="true" />
+                    }
+                    break;
                 }
-                else
-                {
-                    <link rel="stylesheet" href="~/css/light.css" asp-append-version="true" />
-                }
-                break;
             }
+        }
+        else
+        {
+            /** Link light theme by default */
+            <link rel="stylesheet" href="~/css/light.css" asp-append-version="true" />
         }
     }
 </head>

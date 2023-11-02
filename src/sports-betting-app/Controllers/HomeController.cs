@@ -37,15 +37,7 @@ namespace sports_betting_app.Controllers
                 {
                     if (cookie.Key == "Theme")
                     {
-                        var color = "Light";
-                        if (cookie.Value == "Dark")
-                        {
-                            color = "Light";
-                        }
-                        else
-                        {
-                            color = "Dark";
-                        }
+                        var color = cookie.Value == "Dark" ? "Light" : "Dark";
 
                         /** toggle cookie value **/
                         var cookieOps = new CookieOptions();
@@ -56,7 +48,8 @@ namespace sports_betting_app.Controllers
             }
             else
             {
-                Response.Cookies.Append("Theme", "dark");
+                /** Default color is light, so make dark on first round **/
+                Response.Cookies.Append("Theme", "Dark");
             }
 
             /** redirect to main page
