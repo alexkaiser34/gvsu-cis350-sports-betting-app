@@ -86,9 +86,10 @@ namespace API.Controllers
                 user_id = inputWager.user_id,
                 game_id = inputWager.game_id,
                 bet_type = inputWager.bet_type,
+                bet_data = inputWager.bet_data,
                 wager_amount = inputWager.wager_amount,
-                amount_win = inputWager.amount_win,
-                didWagerWin = inputWager.didWagerWin
+                amount_win = 0.0f,
+                completed = false
             };
 
             List<int> ids = new List<int>();
