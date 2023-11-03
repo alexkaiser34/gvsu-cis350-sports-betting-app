@@ -9,6 +9,9 @@ namespace API.Models
     public class Wager : WagerData
     {
         public string id { get; set; }
+
+        public string date { get; set; }
+
     }
 
     public class WagerData

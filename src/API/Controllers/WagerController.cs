@@ -44,6 +44,22 @@ namespace API.Controllers
             return await _dbService.dbContext.ScanAsync<Wager>(conditions).GetRemainingAsync();
         }
 
+
+        [HttpGet]
+        [Route("user/{user_id}/date")]
+        public async Task<IEnumerable<Wager>> GetByDateAndUser(string user_id, string begin, string? end = null)
+        {
+            List<ScanCondition> tmp = _dbService.getDateConditions("date", begin, end);
+            tmp.Add(new ScanCondition("user_id", ScanOperator.Equal, user_id));
+            DynamoDBOperationConfig config = new DynamoDBOperationConfig()
+            {
+                ConditionalOperator = ConditionalOperatorValues.And
+            };
+
+            return await _dbService.dbContext.ScanAsync<Wager>(tmp, config).GetRemainingAsync();
+
+        }
+
         [HttpGet]
         [Route("game/{game_id}")]
         public async Task<IEnumerable<Wager>> GetByGameID(string game_id = "123")
@@ -87,6 +103,7 @@ namespace API.Controllers
                 {
                     /** assign ID **/
                     newWager.id = i.ToString();
+                    newWager.date = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
                     await _dbService.dbContext.SaveAsync<Wager>(newWager);
                     return;
                 }
@@ -96,9 +113,14 @@ namespace API.Controllers
 
         [HttpDelete]
         [Route("Delete")]
-        public async Task Delete(Wager inputWager)
+        public async Task DeleteById(string id = "123")
         {
-            await _dbService.dbContext.DeleteAsync<Wager>(inputWager);
+            List<Wager> tmp = await _dbService.dbContext.QueryAsync<Wager>(id).GetRemainingAsync();
+
+            if (tmp.Count > 0)
+            {
+                await _dbService.dbContext.DeleteAsync<Wager>(tmp[0]);
+            }
         }
 
     }

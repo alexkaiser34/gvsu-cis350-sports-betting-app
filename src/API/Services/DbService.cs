@@ -15,7 +15,7 @@ namespace API.Services
             dbContext = dynamoDBContext;
         }
 
-        private IEnumerable<ScanCondition> _getConditions(string beginDate, string endDate = null)
+        public List<ScanCondition> getDateConditions(string key, string beginDate, string endDate = null)
         {
 
             string end = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
@@ -29,12 +29,12 @@ namespace API.Services
                 /** Add time to end day to include all games within that day **/
                 DateTime tmp = DateTime.Parse(endDate).AddHours(23).AddMinutes(59);
                 end = tmp.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
-                conditions.Add(new ScanCondition("commence_time", ScanOperator.Between, begin, end));
+                conditions.Add(new ScanCondition(key, ScanOperator.Between, begin, end));
             }
             else
             {
                 /** return a single day **/
-                conditions.Add(new ScanCondition("commence_time", ScanOperator.BeginsWith, beginDate));
+                conditions.Add(new ScanCondition(key, ScanOperator.BeginsWith, beginDate));
             }
 
             return conditions;
@@ -51,7 +51,7 @@ namespace API.Services
 
         public async Task<IEnumerable<T>> GetByDate(string begin, string? end = null)
         {
-            IEnumerable<ScanCondition> conditions = _getConditions(begin, end);
+            IEnumerable<ScanCondition> conditions = getDateConditions("commence_time", begin, end);
             DynamoDBOperationConfig config = new DynamoDBOperationConfig()
             {
                 ConditionalOperator = ConditionalOperatorValues.And
