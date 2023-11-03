@@ -12,6 +12,11 @@ namespace API.Models
 
         public string date { get; set; }
 
+        public bool completed { get; set; }
+
+        public float amount_win { get; set; }
+
+
     }
 
     public class WagerData
@@ -19,14 +24,22 @@ namespace API.Models
         [Required]
         public string user_id { get; set; }
 
+        [Required]
         public string game_id { get; set; }
 
         public string bet_type {  get; set; }
+
+        public BetData bet_data { get; set; }
         
         public float wager_amount { get; set; }
 
-        public float amount_win { get; set; }
 
-        public bool didWagerWin { get; set; }
+    }
+
+    public class BetData
+    {
+        public string name { get; set; }
+        public float price { get; set; }
+        public float? point { get; set; }
     }
 }
