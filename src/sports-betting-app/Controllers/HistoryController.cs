@@ -7,9 +7,9 @@ namespace sports_betting_app.Controllers
     public class HistoryController : Controller
     {
 
-        private readonly IAPIClientService<GameScore> _api;
+        private readonly IAPIClientService<Wager> _api;
 
-        public HistoryController(IAPIClientService<GameScore> api)
+        public HistoryController(IAPIClientService<Wager> api)
         {
             _api = api;
         }
