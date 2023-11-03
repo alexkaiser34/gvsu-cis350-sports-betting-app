@@ -30,7 +30,7 @@ namespace Backend.Services
                 .GetRemainingAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAll<T>()
+        public async Task<List<T>> GetAll<T>()
         {
             IEnumerable<ScanCondition> conditions = Enumerable.Empty<ScanCondition>();
             var scan = await _dbContext.ScanAsync<T>(conditions).GetRemainingAsync();

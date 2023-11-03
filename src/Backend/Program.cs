@@ -5,6 +5,7 @@ var app = new App();
 
 await app.updateScores();
 await app.updateOdds();
+await app.updateWagers();
 
 
 
