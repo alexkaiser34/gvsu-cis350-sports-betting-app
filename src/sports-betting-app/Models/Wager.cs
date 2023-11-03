@@ -7,6 +7,8 @@ namespace sports_betting_app.Models
     public class Wager : WagerData
     {
         public string id { get; set; }
+        public string date { get; set; }
+
     }
 
     public class WagerData
