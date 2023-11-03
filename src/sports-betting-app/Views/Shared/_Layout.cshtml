@@ -24,11 +24,11 @@
                     if (cookie.Value == "Dark")
                     {
                         /** the style sheet links determine the theme of the application */
-                        <link rel="stylesheet" href="~/css/dark.css" asp-append-version="true" />
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" asp-append-version="true" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
                     }
                     else
                     {
-                        <link rel="stylesheet" href="~/css/light.css" asp-append-version="true" />
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
                     }
                     break;
                 }
@@ -37,11 +37,8 @@
         else
         {
             /** Link light theme by default */
-            <link rel="stylesheet" href="~/css/light.css" asp-append-version="true" />
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
         }
-
-
-
     }
 </head>
 <body>
@@ -93,7 +90,7 @@
             // style the navbar according to the theme
             if (currentTheme == "Dark")
             {
-                <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 bg-primary" data-bs-theme="dark">
+                <nav class="navbar navbar-dark navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 bg-primary" data-bs-theme="dark">
                     <div class="container-fluid align-items-baseline pe-3 ps-3">
                         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">sports_betting_app</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01"
@@ -134,7 +131,7 @@
             }
             else
             {
-                <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 bg-light" data-bs-theme="light">
+                <nav class="navbar navbar-light navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 bg-light" data-bs-theme="light">
                     <div class="container-fluid align-items-baseline pe-3 ps-3">
                         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">sports_betting_app</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03"
