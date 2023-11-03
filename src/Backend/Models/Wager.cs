@@ -1,15 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Amazon.DynamoDBv2.DataModel;
+using System.ComponentModel.DataAnnotations;
 
 
-namespace sports_betting_app.Models
+namespace Backend.Models
 {
 
+    [DynamoDBTable("Wagers")]
     public class Wager : WagerData
     {
         public string id { get; set; }
+
         public string date { get; set; }
+
         public bool completed { get; set; }
+
         public float amount_win { get; set; }
+
 
     }
 
@@ -21,14 +27,13 @@ namespace sports_betting_app.Models
         public string game_id { get; set; }
 
         public string bet_type {  get; set; }
-
         public BetData bet_data { get; set; }
-
 
         public float wager_amount { get; set; }
 
 
     }
+
 
     public class BetData
     {
