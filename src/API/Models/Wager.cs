@@ -16,6 +16,10 @@ namespace API.Models
 
         public float amount_win { get; set; }
 
+        public float american_odds { get; set; }
+
+        public float decimal_odds { get; set; }
+
 
     }
 
@@ -27,9 +31,8 @@ namespace API.Models
         [Required]
         public string game_id { get; set; }
 
-        public string bet_type {  get; set; }
 
-        public BetData bet_data { get; set; }
+        public BetData[] bet_data { get; set; }
         
         public float wager_amount { get; set; }
 
@@ -38,6 +41,7 @@ namespace API.Models
 
     public class BetData
     {
+        public string bet_type { get; set; }
         public string name { get; set; }
         public float price { get; set; }
         public float? point { get; set; }
