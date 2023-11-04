@@ -102,7 +102,7 @@ namespace Backend.Services
 
         }
 
-        private float _getAmountWon(Wager currentWager, GameScore game)
+        private float _getAmountWon(Wager currentWager, List<GameScore> scores)
         {
             BetData[] wagerData = currentWager.bet_data;
 
@@ -111,29 +111,38 @@ namespace Backend.Services
             /** loop through each leg of wager **/
             foreach(var data in wagerData)
             {
-                /** determine if each leg won **/
-                switch(data.bet_type)
+                /* find the game for the current wager 
+                 * specifying this in each bet data allows for multi game
+                 * parlays 
+                 */
+                GameScore game = scores.Find(x => x.id == data.game_id);
+
+                if (game != null)
                 {
-                    case "h2h":
-                        didWin = this._calculateHeadToHead(data, game);
-                        break;
+                    /** determine if each leg won **/
+                    switch (data.bet_type)
+                    {
+                        case "h2h":
+                            didWin = this._calculateHeadToHead(data, game);
+                            break;
 
-                    case "spreads":
-                        didWin = this._calculateSpread(data, game);
-                        break;
+                        case "spreads":
+                            didWin = this._calculateSpread(data, game);
+                            break;
 
-                    case "totals":
-                        didWin = this._calculateTotal(data, game);
-                        break;
+                        case "totals":
+                            didWin = this._calculateTotal(data, game);
+                            break;
 
-                    default:
-                        break;
-                }
+                        default:
+                            break;
+                    }
 
-                /** if a part of the bet lost, we return 0 **/
-                if (!didWin)
-                {
-                    return 0.0f;
+                    /** if a part of the bet lost, we return 0 **/
+                    if (!didWin)
+                    {
+                        return 0.0f;
+                    }
                 }
             }
 
@@ -151,28 +160,23 @@ namespace Backend.Services
             foreach (var wager in wagers)
             {
                 /** find the game for current wager **/
-                GameScore game = scores.Find(x => x.id == wager.game_id);
-
-                if (game != null) 
-                {
+                //GameScore game = scores.Find(x => x.id == wager.game_id);
                     /** get the amount won **/
-                    float amountWon = _getAmountWon(wager, game);
+                float amountWon = _getAmountWon(wager, scores);
                     
-                    Wager tmp = new Wager()
-                    {
-                        id = wager.id,
-                        date = wager.date,
-                        completed = true,
-                        amount_win = amountWon,
-                        american_odds = wager.american_odds,
-                        decimal_odds = wager.decimal_odds,
-                        user_id = wager.user_id,
-                        game_id = wager.game_id,
-                        bet_data = wager.bet_data,
-                        wager_amount = wager.wager_amount
-                    };
-                    result.Add(tmp);
-                }
+                Wager tmp = new Wager()
+                {
+                    id = wager.id,
+                    date = wager.date,
+                    completed = true,
+                    amount_win = amountWon,
+                    american_odds = wager.american_odds,
+                    decimal_odds = wager.decimal_odds,
+                    user_id = wager.user_id,
+                    bet_data = wager.bet_data,
+                    wager_amount = wager.wager_amount
+                };
+                result.Add(tmp);
             }
 
             return result;

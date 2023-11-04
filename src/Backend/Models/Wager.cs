@@ -28,10 +28,7 @@ namespace Backend.Models
         [Required]
         public string user_id { get; set; }
 
-        public string game_id { get; set; }
-
         public BetData[] bet_data { get; set; }
-
 
         public float wager_amount { get; set; }
 
@@ -41,6 +38,8 @@ namespace Backend.Models
 
     public class BetData
     {
+        [Required]
+        public string game_id { get; set; }
         public string bet_type { get; set; }
         public string name { get; set; }
         public float price { get; set; }
