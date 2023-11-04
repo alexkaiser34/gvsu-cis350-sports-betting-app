@@ -69,6 +69,37 @@ namespace API.Controllers
             return await _dbService.dbContext.ScanAsync<Wager>(conditions).GetRemainingAsync();
         }
 
+        private double _decimal_to_american(double dec)
+        {
+            if (dec >= 2.0)
+            {
+                return Math.Round(((dec - 1.0) * 100.0), 2);
+            }
+
+            return Math.Round((-100.0) / (dec - 1.0));
+        }
+
+        private double _american_to_decimal(double american)
+        {
+            if (american > 0.0)
+            {
+                return Math.Round((american / 100.0) + 1);
+            }
+
+            return Math.Round((100.0 / Math.Abs(american)) + 1);
+        }
+
+        private float _get_decimal_odds(BetData[] wagerData)
+        {
+            double multiplier = 1.0;
+            foreach(var data in wagerData)
+            {
+                multiplier *= Math.Round(data.price, 2);
+            }
+
+            return (float)Math.Round(multiplier, 2);
+        }
+
         [HttpPost]
         [Route("Post")]
         public async Task PostWager(WagerData inputWager)
@@ -81,15 +112,20 @@ namespace API.Controllers
             /** Auto increment ID **/
             IEnumerable<ScanCondition> conditions = Enumerable.Empty<ScanCondition>();
             var scan = await _dbService.dbContext.ScanAsync<Wager>(conditions).GetRemainingAsync();
+
+            float decimalOdds = this._get_decimal_odds(inputWager.bet_data);
+            float americanOdds = (float)this._decimal_to_american((double)decimalOdds);
+
             Wager newWager = new Wager()
             {
                 user_id = inputWager.user_id,
                 game_id = inputWager.game_id,
-                bet_type = inputWager.bet_type,
                 bet_data = inputWager.bet_data,
                 wager_amount = inputWager.wager_amount,
                 amount_win = 0.0f,
-                completed = false
+                completed = false,
+                american_odds = americanOdds,
+                decimal_odds = decimalOdds
             };
 
             List<int> ids = new List<int>();
