@@ -119,7 +119,6 @@ namespace API.Controllers
             Wager newWager = new Wager()
             {
                 user_id = inputWager.user_id,
-                game_id = inputWager.game_id,
                 bet_data = inputWager.bet_data,
                 wager_amount = inputWager.wager_amount,
                 amount_win = 0.0f,
