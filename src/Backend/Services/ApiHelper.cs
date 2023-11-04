@@ -21,13 +21,13 @@ namespace Backend.Services
             return scores;
         }
 
-        public async Task<IEnumerable<GameOdd>> getUpcomingOdds()
+        public async Task<IEnumerable<ApiGameOdd>> getUpcomingOdds()
         {
-            var odds = await _api.makeRequest<GameOdd>("/americanfootball_nfl/odds", new List<QueryParam>
+            var odds = await _api.makeRequest<ApiGameOdd>("/americanfootball_nfl/odds", new List<QueryParam>
             {
                 new QueryParam {key="regions", value="us"},
                 new QueryParam {key="markets", value="h2h,spreads,totals"},
-                new QueryParam {key="bookmakers", value="fanduel,draftkings,betmgm"}
+                new QueryParam {key="bookmakers", value="fanduel"}
             });
 
             return odds;

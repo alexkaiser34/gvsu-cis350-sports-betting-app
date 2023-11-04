@@ -8,7 +8,7 @@ namespace Backend.Services
         private readonly DbHelper _dbHelper;
         private readonly ApiHelper _apiHelper;
         private readonly WagerHelper _wagerHelper;
-
+        private readonly OddsHelper _oddsHelper;    
 
         public App()
         {
@@ -16,6 +16,7 @@ namespace Backend.Services
             _dbHelper = new DbHelper(jsonHelper.getAwsKeys());
             _apiHelper = new ApiHelper(jsonHelper.getApiKey());
             _wagerHelper = new WagerHelper();
+            _oddsHelper = new OddsHelper();
         }
 
         public async Task updateScores()
@@ -38,7 +39,11 @@ namespace Backend.Services
             try
             {
                 var odds = await _apiHelper.getUpcomingOdds();
-                await _dbHelper.Post(odds);
+
+                /** convert api odds to a more readable format **/
+                IEnumerable<GameOdd> gameOdds = _oddsHelper.ApiToDB(odds);
+
+                await _dbHelper.Post(gameOdds);
 
             }
             catch 

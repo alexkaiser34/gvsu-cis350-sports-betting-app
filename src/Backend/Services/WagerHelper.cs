@@ -4,28 +4,8 @@ namespace Backend.Services
 {
     internal class WagerHelper
     {
-        public WagerHelper() { 
-        
-        }
 
-        private float _decimal_to_american(float dec)
-        {
-            if(dec >= 2.0f) {
-                return (dec - 1.0f) * 100.0f;
-            }
-
-            return (-100.0f) / (dec - 1.0f);
-        }
-
-        private float _american_to_decimal(float american)
-        {
-            if(american > 0.0f)
-            {
-                return (american / 100.0f) + 1;
-            }
-
-            return (100.0f / Math.Abs(american)) + 1;
-        }
+        public WagerHelper() { }
 
         private double _calculateAmountWon(BetData[] wagerData, float amountBet)
         {
