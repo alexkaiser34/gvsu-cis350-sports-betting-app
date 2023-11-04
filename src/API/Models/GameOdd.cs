@@ -3,34 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Models
 {
-    public class Outcome
-    {
-        public string name { get; set; }
-        public float price { get; set; }
-        public float? point { get; set; }
-    }
-
-    public class Market
-    {
-        [Required]
-        public string key { get; set; }
-        public string last_update { get; set; }
-
-        public Outcome[] outcomes { get; set; }
-
-    }
-    public class BookMaker
-    {
-        [Required]
-        public string key { get; set; }
-
-        public string title { get; set; }
-
-        public string last_update { get; set; }
-
-        public Market[] markets { get; set; }
-    }
-
     [DynamoDBTable("GameOdds")]
     public class GameOdd
     {
@@ -47,8 +19,24 @@ namespace API.Models
 
         public string away_team { get; set; }
 
-        public BookMaker[] bookmakers { get; set; }
+        public Odd[] odds { get; set; }
 
+    }
+
+    public class Odd
+    {
+        [Required]
+        public string bet_type { get; set; }
+
+        public Outcome[] outcomes { get; set; }
+
+    }
+    public class Outcome
+    {
+        public string name { get; set; }
+        public float decimal_odd { get; set; }
+        public float american_odd { get; set; }
+        public float? point { get; set; }
     }
 
 }
