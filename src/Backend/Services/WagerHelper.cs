@@ -159,24 +159,38 @@ namespace Backend.Services
             /** iterate through each wager **/
             foreach (var wager in wagers)
             {
-                /** find the game for current wager **/
-                //GameScore game = scores.Find(x => x.id == wager.game_id);
-                    /** get the amount won **/
-                float amountWon = _getAmountWon(wager, scores);
-                    
-                Wager tmp = new Wager()
+                /** Ensure all games in the wager have been completed **/
+                bool isWagerComplete = true;
+                foreach (var data in wager.bet_data)
                 {
-                    id = wager.id,
-                    date = wager.date,
-                    completed = true,
-                    amount_win = amountWon,
-                    american_odds = wager.american_odds,
-                    decimal_odds = wager.decimal_odds,
-                    user_id = wager.user_id,
-                    bet_data = wager.bet_data,
-                    wager_amount = wager.wager_amount
-                };
-                result.Add(tmp);
+                    GameScore score_tmp = scores.Find(x => x.id == data.game_id);
+                    if (score_tmp == null)
+                    {
+                        isWagerComplete = false;
+                        break;
+                    }
+                }
+
+                if (isWagerComplete)
+                {
+
+                    /** get the amount won **/
+                    float amountWon = _getAmountWon(wager, scores);
+
+                    Wager tmp = new Wager()
+                    {
+                        id = wager.id,
+                        date = wager.date,
+                        completed = true,
+                        amount_win = amountWon,
+                        american_odds = wager.american_odds,
+                        decimal_odds = wager.decimal_odds,
+                        user_id = wager.user_id,
+                        bet_data = wager.bet_data,
+                        wager_amount = wager.wager_amount
+                    };
+                    result.Add(tmp);
+                }
             }
 
             return result;
