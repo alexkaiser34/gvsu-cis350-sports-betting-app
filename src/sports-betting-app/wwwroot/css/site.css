@@ -16,3 +16,29 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#betGrid {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+#betGridItem {
+    display: flex;
+    flex: 1 1 500px;
+    padding: 15px 15px;
+}
+
+#away-team {
+    text-align: center;
+}
+
+#home-team {
+    text-align: center;
+}
+
+#odd-header {
+    text-align: center;
+}

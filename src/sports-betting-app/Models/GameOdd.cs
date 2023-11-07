@@ -2,6 +2,14 @@
 
 namespace sports_betting_app.Models
 {
+
+    public class GameOddData
+    {
+        public float? american_odd { get; set; }
+        public float? point { get; set; }
+
+
+    };
     public class GameOdd
     {
         [Required]

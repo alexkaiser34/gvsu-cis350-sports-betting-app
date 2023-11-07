@@ -3,40 +3,13 @@
     ViewData["Title"] = "Bets Page";
 }
 
-<table class="table table-bordered table-striped" style="width:100%">
-    <thead>
-        <tr>
-            <th>
-                ID
-            </th>
-            <th>
-                Away Team
-            </th>
-            <th>
-                Home Team
-            </th>
-            <th>
-                Commence Time
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var obj in Model)
-        {
-            <tr>
-                <td>
-                    <h3>@obj.id</h3>
-                </td>
-                <td>
-                    <h3>@obj.away_team</h3>
-                </td>
-                <td>
-                    <h3>@obj.home_team</h3>
-                </td>
-                <td>
-                    <h3>@obj.commence_time</h3>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+<div class="container-fluid" id="betGrid">
+    @foreach (GameOdd obj in Model)
+    {
+        <div id="betGridItem">
+            <partial name="_GameOdd" model="obj" />
+        </div>
+    }
+</div>
+

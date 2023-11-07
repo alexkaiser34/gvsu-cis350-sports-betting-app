@@ -1,0 +1,132 @@
+﻿@model GameOdd
+
+
+@{
+
+    IDictionary<string, GameOddData> homeData = new Dictionary<string, GameOddData>();
+    IDictionary<string, GameOddData> awayData = new Dictionary<string, GameOddData>();
+    IDictionary<string, GameOddData> totalData = new Dictionary<string, GameOddData>();
+
+    foreach(Odd odd in Model.odds)
+    {
+        foreach (Outcome outcome in odd.outcomes)
+        {
+            bool isHome = outcome.name.Equals(Model.home_team, StringComparison.OrdinalIgnoreCase);
+            bool isTotal = odd.bet_type.Equals("totals", StringComparison.OrdinalIgnoreCase);
+            bool isSpread = odd.bet_type.ToLower().Equals("spreads", StringComparison.OrdinalIgnoreCase);
+
+            GameOddData tmp = new GameOddData();
+
+            if (isHome)
+            {
+                if (isSpread)
+                {
+                    tmp.american_odd = outcome.american_odd;
+                    tmp.point = outcome.point;
+
+                }
+                else
+                {
+                    tmp.american_odd = outcome.american_odd;
+                }
+
+                homeData.Add(odd.bet_type, tmp);
+            }
+            else if (isTotal)
+            {
+                tmp.american_odd = outcome.american_odd;
+                tmp.point = outcome.point;
+                totalData.Add(outcome.name.ToLower(), tmp);
+            }
+            else
+            {
+                if (isSpread)
+                {
+                    tmp.american_odd = outcome.american_odd;
+                    tmp.point = outcome.point;
+
+                }
+                else
+                {
+                    tmp.american_odd = outcome.american_odd;
+                }
+
+                awayData.Add(odd.bet_type, tmp);
+            }
+        }
+    }
+}
+ <div class="container border border-info rounded" id="GameOddContainer">
+     <div class="d-flex flex-row justify-content-evenly align-items-center p-2">
+        <p class="font-weight-bold"">@DateTime.Parse(Model.commence_time).ToString("MM/dd hh:mm")</p>
+        <div class="container" id="game-odd-@Model.id">
+            <div class="row align-items-center font-weight-bold d-flex flex-nowrap pb-2" id="odd-header">
+                <div class="col">
+                    <p>Team</p>
+                </div>
+                <div class="col">
+                    <p>Spreads</p>
+                </div>
+                <div class="col">
+                    <p>Money</p>
+                </div>
+                <div class="col">
+                    <p>Totals</p>
+                </div>
+            </div>
+            <div class="row align-items-center justify-content-evenly d-flex flex-nowrap pb-2" id="away-team">
+                <div class="col">
+                    <p>@Model.away_team</p>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-info btn-block">
+                        <div class="d-flex flex-column align-items-center">
+                            <p>@awayData["spreads"].point</p>
+                            <p>@awayData["spreads"].american_odd</p>
+                        </div>
+                    </button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-info btn-block">
+                        <span>@awayData["h2h"].american_odd</span>
+                    </button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-info btn-block">
+                        <div class="d-flex flex-column">
+                            <p>O @totalData["over"].point</p>
+                            <p>@totalData["over"].american_odd</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <div class="row align-items-center justify-content-evenly d-flex flex-nowrap pt-2 pb-2" id="home-team">
+                <div class="col">
+                    <p>@Model.home_team</p>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-info btn-block">
+                        <div class="d-flex flex-column">
+                            <p>@homeData["spreads"].point</p>
+                            <p>@homeData["spreads"].american_odd</p>
+                        </div>
+                    </button>
+                    
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-info btn-block">
+                        <span>@homeData["h2h"].american_odd</span>
+                    </button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-info btn-block">
+                        <div class="d-flex flex-column">
+                            <p>U @totalData["under"].point</p>
+                            <p>@totalData["under"].american_odd</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
