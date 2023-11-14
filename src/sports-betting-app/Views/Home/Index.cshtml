@@ -1,94 +1,155 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<link rel="stylesheet" href="~/css/homeIndexStyle.css" asp-append-version="true" />
 
-<div class="text-center hero-section">
-    <h1 class="display-4">sports_betting_app</h1>
-    <p class="lead">Enhance your sports betting with strategy and analysis.</p>
-    <a href="#learn-more" class="btn btn-primary btn-lg">Learn More</a>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+</head>
+<body>
 
-<section id="learn-more" class="container my-5">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="feature-card">
-                <h2>Analysis</h2>
-                <p>Access insights and data-driven analysis to make informed bets.</p>
+    <section class="hero-section">
+        <h1>sports_betting_app</h1>
+        <h2>Enhance your game now with strategy and analysis.</h2>
+        <a href="#learn-more" class="btn btn-primary btn-lg">Learn More</a>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="coolAnimationBlock">
+                        <div class="coolFormatContainer">
+                            <ul class="coolAnimationList">
+                                <li class="coolAnimationItem">
+                                    <div class="coolAnimation_visibleItem">
+                                        <div class="coolAnimation_title">
+                                            Analysis
+                                        </div>
+                                    </div>
+                                    <div class="coolAnimation_hiddenItem">
+                                        <p class="coolAnimation_text">
+                                            Access insights analysis to make informed bets.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="coolAnimationBlock">
+                        <div class="coolFormatContainer">
+                            <ul class="coolAnimationList">
+                                <li class="coolAnimationItem">
+                                    <div class="coolAnimation_visibleItem">
+                                        <div class="coolAnimation_title">
+                                            Strategies
+                                        </div>
+                                    </div>
+                                    <div class="coolAnimation_hiddenItem">
+                                        <p class="coolAnimation_text">
+                                            Discover and improve upon your past betting moves.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="coolAnimationBlock">
+                        <div class="coolFormatContainer">
+                            <ul class="coolAnimationList">
+                                <li class="coolAnimationItem">
+                                    <div class="coolAnimation_visibleItem">
+                                        <div class="coolAnimation_title">
+                                            Community
+                                        </div>
+                                    </div>
+                                    <div class="coolAnimation_hiddenItem">
+                                        <p class="coolAnimation_text">
+                                            Engage with other sports betting winners and enthusiasts.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="feature-card">
-                <h2>Strategies</h2>
-                <p>Discover winning strategies and improve your betting success rate.</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="feature-card">
-                <h2>Community</h2>
-                <p>Engage with a community of sports betting enthusiasts.</p>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 
-<section class="container my-5">
-    <h2 class="text-center mb-4">##### Jump down ##### | Upcoming Events</h2>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="event-card">
-                <img src="event1.jpg" class="card-img-top" alt="Event 1">
-                <div class="card-body">
-                    <h5 class="card-title">Football Match</h5>
-                    <p class="card-text">Join the discussion on the upcoming football match and get tips from experts.</p>
-                    <a href="#" class="btn btn-primary">Learn More</a>
+    <section class="event-section">
+        <div class="container my-5">
+            <h2 class="text-center mb-4">Upcoming Events</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="event-card">
+                        <img src="event1.jpg" class="card-img-top" alt="Event 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Football Match</h5>
+                            <p class="card-text">Upcoming football match and get tips from experts.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="event-card">
+                        <img src="event2.jpg" class="card-img-top" alt="Event 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Football Match</h5>
+                            <p class="card-text">Upcoming football match and get tips from experts.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="event-card">
-                <img src="event2.jpg" class="card-img-top" alt="Event 2">
-                <div class="card-body">
-                    <h5 class="card-title">Football Match</h5>
-                    <p class="card-text">Join the discussion on the upcoming football match and get tips from experts.</p>
-                    <a href="#" class="btn btn-primary">Learn More</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 
-<section class="container my-5">
-    <h2 class="text-center mb-4">##### Jump down (potentially new page?) ##### | Latest News</h2>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="news-card">
-                <img src="news1.jpg" class="card-img-top" alt="News 1">
-                <div class="card-body">
-                    <h5 class="card-title">New Betting Strategy</h5>
-                    <p class="card-text">Learn about a groundbreaking betting strategy that's gaining popularity among bettors.</p>
-                    <a href="#" class="btn btn-primary">Read More</a>
+    <section class="news-section">
+        <div class="container my-5">
+            <h2 class="text-center mb-4">Latest News</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="news-card">
+                        <img src="news1.jpg" class="card-img-top" alt="News 1">
+                        <div class="card-body">
+                            <h5 class="card-title">news title</h5>
+                            <p class="card-text">news information.</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="news-card">
+                        <img src="news2.jpg" class="card-img-top" alt="News 2">
+                        <div class="card-body">
+                            <h5 class="card-title">news title</h5>
+                            <p class="card-text">news information.</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="news-card">
+                        <img src="news3.jpg" class="card-img-top" alt="News 3">
+                        <div class="card-body">
+                            <h5 class="card-title">news title</h5>
+                            <p class="card-text">news information.</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="news-card">
-                <img src="news2.jpg" class="card-img-top" alt="News 2">
-                <div class="card-body">
-                    <h5 class="card-title">Sports Betting Trends</h5>
-                    <p class="card-text">Stay updated on the latest trends and developments in the world of sports betting.</p>
-                    <a href="#" class="btn btn-primary">Read More</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="news-card">
-                <img src="news3.jpg" class="card-img-top" alt="News 3">
-                <div class="card-body">
-                    <h5 class="card-title">Community Spotlight</h5>
-                    <p class="card-text">Highlighting a community member's successful betting story and tips.</p>
-                    <a href="#" class="btn btn-primary">Read More</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
+
+</body>
+</html>
+
+
+
+
+
+
+
