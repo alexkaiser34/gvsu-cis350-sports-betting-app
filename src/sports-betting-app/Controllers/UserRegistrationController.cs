@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using sports_betting_app.Data;
 using sports_betting_app.Models;
-using static System.Collections.Specialized.BitVector32;
 
 namespace sports_betting_app.Controllers
 {
@@ -14,47 +13,28 @@ namespace sports_betting_app.Controllers
     {
         private readonly IAPIClientService<UserData> _api;
 
-        public UserRegistrationController(IAPIClientService<Userdata> api)
+        public UserRegistrationController(IAPIClientService<UserData> api)
         {
             _api = api;
         }
 
         public IActionResult Index()
         {
-            string data = "Welcome to Sports Bets";
-            return View((object)data);
+            UserData tmp = new UserData();
+            return View(tmp);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(User user)
+        public async Task<IActionResult> Register(UserData user)
         {
             try
             {
-                // Call the API to check user data
-                bool userDataCorrect = await _api.CheckUserData(user);
+                // post the user to the api
+                await _api.Add(user, "User/Post");
 
-                if (userDataCorrect)
-                {
-                    // Data correct, proceed with registration
-                    // Call another method to handle the registration process
-                    bool registrationSuccess = await _api.RegisterUser(user);
+                // redirect to previous page
+                return Redirect(Request.Headers["Referer"].ToString());
 
-                    if (registrationSuccess)
-                    {
-                        // Registration successful, redirect to a success page or do something else
-                        return RedirectToAction("RegistrationSuccess");
-                    }
-
-                    // Handle failed registration, maybe return to the same page with an error message
-                    ModelState.AddModelError(string.Empty, "Registration failed. Please try again.");
-                    return View("RegistrationFailedView"); // Provide a view for failed registration
-                }
-                else
-                {
-                    // Show an error message indicating incorrect user data
-                    ModelState.AddModelError(string.Empty, "Incorrect user data. Please verify your information.");
-                    return View(); // Return to the same page with an error message
-                }
             }
             catch (Exception ex)
             {

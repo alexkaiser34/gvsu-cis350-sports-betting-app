@@ -1,64 +1,66 @@
-@model string
+@model UserData
 @{
     ViewData["Title"] = "User Registration Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@Model</h1>
-    <p>This is the user registration page.</p>
-</div>
 
+@section Scripts {
+    <script>
+        $('input').on('blur keyup change', function () {
+            if ($("#userForm").valid()) {
+                $('#submitButton').prop('disabled', false);
+            } else {
+                $('#submitButton').prop('disabled', true);
+            }
+
+            if ($("#password").val().length > 1) {
+                $('#confirmPassword').show();
+            } else {
+                $('#confirmPassword').hide();
+            }
+        });
+    </script>
+}
 
 <div class="container">
     <h2>User Registration</h2>
-    <form method="post" id="registrationForm">
+    <form class="was-validated" asp-controller="UserRegistration" asp-action="Register" method="post" id="userForm"
+          oninput='up2.setCustomValidity(up2.value != password.value ? "Passwords do not match." : "")'>
+        <div class="form-group">
+            <label for="userName">User Name</label>
+            <input asp-for="UserName" class="form-control" id="userName" name="userName" required placeholder="Enter a username..." />
+        </div>
         <div class="form-group">
             <label for="email">Email address</label>
-            <input type="email" class="form-control" id="email" name="email" required>
+            <input asp-for="Email" type="email" class="form-control" id="email" name="email" required placeholder="Enter your email..." />
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <input asp-for="Password" type="password" class="form-control" id="password" name="password" pattern="(?=.*\d)(?=.*[!#$%^&*])(?=.*[a-z]).{8,20}" required placeholder="Enter a password..." />
+            <div class="invalid-feedback">
+                <ul>
+                    <li>Password must be between 8 and 20 characters long</li>
+                    <li>Must containe at least one number</li>
+                    <li>Must containe at least one special character</li>
+                </ul>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Register</button>
+        <div class="form-group" id="confirmPassword" style="display:none">
+            <label>Confirm Password</label>
+            <input type="password" class="form-control" name="up2" placeholder="Retype password..." />
+            <div class="invalid-feedback">
+                Password must match
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input asp-for="firstName" class="form-control" id="firstName" name="firstName"  required placeholder="Enter your firstname..." />
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input asp-for="lastName" class="form-control" id="lastName" name="lastName" required placeholder="Enter your username..." />
+        </div>
+        <button type="submit" class="btn btn-primary submit-button" id="submitButton" disabled>Register</button>
     </form>
 </div>
-
-@section Scripts {
-    <script>// Use JavaScript to handle form submission
-        document.getElementById("registrationForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            // Get form data
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-
-            // Create an object with user data
-            const user = {
-                email: email,
-                password: password
-            };
-
-            // Send user data to the web API using fetch or other method
-            fetch(user.registration.API, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(user)
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Registration successful
-                    console.log("User registered successfully!");
-                    // Redirect or show a success message
-                } else {
-                    // Registration failed
-                    console.error("Registration failed.");
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
-        });</script>
-}
