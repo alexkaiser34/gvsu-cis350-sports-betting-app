@@ -10,7 +10,7 @@ namespace WebAppUnitTests
     public class HomeControllerTest
     {
         HomeController controller;
-        private readonly IAPIClientService<GameOdd> _api;
+        private readonly IAPIClientService<Wager> _api;
 
         public HomeControllerTest()
         {
