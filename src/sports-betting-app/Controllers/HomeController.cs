@@ -11,8 +11,8 @@ namespace sports_betting_app.Controllers
     public class HomeController : Controller
     {
 
-        private readonly IAPIClientService<GameOdd> _api;
-        public HomeController(IAPIClientService<GameOdd> api)
+        private readonly IAPIClientService<Wager> _api;
+        public HomeController(IAPIClientService<Wager> api)
         {
             _api = api;
         }
