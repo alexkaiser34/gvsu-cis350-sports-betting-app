@@ -16,8 +16,27 @@ namespace sports_betting_app.Controllers
         public async Task<IActionResult> Index()
         {
             /** make the API request and pass data to view **/
-            string endpoint = "GameOdd";
-            IEnumerable<GameOdd> results = await _api.GetAll(endpoint);
+            string endpoint = "GameOdd/date";
+
+            ApiParam current = new ApiParam()
+            {
+                key = "begin",
+                value = DateTime.Now.ToString("yyyy-MM-dd")
+            };
+
+            ApiParam nextWeek = new ApiParam()
+            {
+                key = "end",
+                value = DateTime.Now.AddDays(7).ToString("yyyy-MM-dd")
+            };
+
+
+            List<ApiParam> dateParams = new List<ApiParam>();
+
+            dateParams.Add(current);
+            dateParams.Add(nextWeek);
+
+            IEnumerable<GameOdd> results = await _api.GetAll(endpoint, dateParams);
             return View(results);
         }
     }
