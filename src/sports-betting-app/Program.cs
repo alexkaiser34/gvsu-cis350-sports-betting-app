@@ -9,6 +9,15 @@ builder.Services.AddControllersWithViews();
 // add generic api service to container
 builder.Services.AddScoped(typeof(IAPIClientService<>), typeof(ApplicationAPIContext<>));
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(20);
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,9 +31,13 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
+
 
 app.MapControllerRoute(
     name: "default",

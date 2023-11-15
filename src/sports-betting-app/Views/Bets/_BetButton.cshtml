@@ -1,0 +1,80 @@
+﻿@model BetButtonData
+
+@{
+    string decimal_to_american(float dec)
+    {
+        int res = 0;
+        if (dec >= 2.0f)
+        {
+            res = (int)Math.Round((dec - 1.0f) * 100.0f);
+        }
+        else
+        {
+            res = (int)Math.Round((-100.0f) / (dec - 1.0f));
+        }
+
+        if (res >= 0)
+        {
+            return "+" + res.ToString();
+        }
+
+        return res.ToString();
+    }
+
+    string floatToString(float? num)
+    {
+        if (num != null)
+        {
+            if (num > 0.0f)
+            {
+                return "+" + num.ToString();
+            }
+            return num.ToString();
+        }
+
+        return "";
+
+    }
+}
+<button onclick="updateWager(@Newtonsoft.Json.JsonConvert.SerializeObject(Model.data))" type="button" class="btn btn-outline-info btn-block">
+
+    @switch (Model.data.bet_type)
+    {
+        case "h2h":
+            <span>@decimal_to_american(Model.data.price)</span>
+            break;
+
+        case "spreads":
+            <div class="d-flex flex-column align-items-center">
+                <p>@floatToString(Model.data.point)</p>
+                <p>@decimal_to_american(Model.data.price)</p>
+            </div>
+
+            break;
+
+        case "totals":
+            <div class="d-flex flex-column">
+                @if (Model.isOver)
+                {
+                    <p>O @Model.data.point</p>
+                }
+                else
+                {
+                    <p>U @Model.data.point</p>
+
+                }
+                <p>@decimal_to_american(Model.data.price)</p>
+            </div>
+            break;
+
+        default:
+            break;
+    }
+</button>
+
+
+
+
+
+
+
