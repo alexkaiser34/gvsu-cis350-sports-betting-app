@@ -1,0 +1,71 @@
+﻿@model WagerData
+
+@{
+    string decimal_to_american(float dec)
+    {
+        int res = 0;
+        if (dec >= 2.0f)
+        {
+            res = (int)Math.Round((dec - 1.0f) * 100.0f);
+        }
+        else
+        {
+            res = (int)Math.Round((-100.0f) / (dec - 1.0f));
+        }
+
+        if (res >= 0)
+        {
+            return "+" + res.ToString();
+        }
+
+        return res.ToString();
+    }
+
+    string floatToString(float? num)
+    {
+        if (num != null)
+        {
+            if (num > 0.0f)
+            {
+                return "+" + num.ToString();
+            }
+            return num.ToString();
+        }
+
+        return "";
+
+    }
+}
+
+<div class="d-flex flex-column">
+    <div class="d-flex flex-column" id="betList">
+        @{
+            if(Model.bet_data.Count > 0)
+            {
+                foreach(BetData bet in Model.bet_data)
+                {
+                    <div class="d-flex flex-column">
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <h3>@bet.bet_type</h3>
+                            <h3>@bet.name</h3>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <h3>@bet.price</h3>
+                            <h3>@bet.point</h3>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="d-flex flex-column" id="bet-null">
+                    <h1>no bets placed</h1>
+                </div>
+            
+            }
+        }
+    </div>
+    <div class="d-flex flex-row justify-content-between align-items-center">
+        <h1>Wager Amount: @Model.wager_amount</h1>
+    </div>
+</div>

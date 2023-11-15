@@ -3,6 +3,13 @@
 namespace sports_betting_app.Models
 {
 
+    public class BetPageData
+    {
+        public GameOdd[] gameOdds { get; set; }
+        public WagerData wager { get; set; }
+
+    }
+
     public class GameOddData
     {
         public float? american_odd { get; set; }

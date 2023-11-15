@@ -53,3 +53,21 @@ function changeTheme() {
     location.reload();
 
 }
+
+
+function updateWager(val) {
+
+    $.ajax({
+        type: "POST",
+        url: 'Bets/updateWagerBet',
+        data: { "bet": val },
+        success: function (data) {
+            location.reload();
+        },
+        error: function (error) {
+            alert(JSON.stringify(error));
+            cache: true;
+        }
+    });
+
+}

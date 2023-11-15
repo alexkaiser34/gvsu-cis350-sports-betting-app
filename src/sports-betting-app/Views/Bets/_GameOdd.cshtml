@@ -1,61 +1,5 @@
 ﻿@model GameOdd
 
-
-@{
-
-    IDictionary<string, GameOddData> homeData = new Dictionary<string, GameOddData>();
-    IDictionary<string, GameOddData> awayData = new Dictionary<string, GameOddData>();
-    IDictionary<string, GameOddData> totalData = new Dictionary<string, GameOddData>();
-
-    foreach(Odd odd in Model.odds)
-    {
-        foreach (Outcome outcome in odd.outcomes)
-        {
-            bool isHome = outcome.name.Equals(Model.home_team, StringComparison.OrdinalIgnoreCase);
-            bool isTotal = odd.bet_type.Equals("totals", StringComparison.OrdinalIgnoreCase);
-            bool isSpread = odd.bet_type.ToLower().Equals("spreads", StringComparison.OrdinalIgnoreCase);
-
-            GameOddData tmp = new GameOddData();
-
-            if (isHome)
-            {
-                if (isSpread)
-                {
-                    tmp.american_odd = outcome.american_odd;
-                    tmp.point = outcome.point;
-
-                }
-                else
-                {
-                    tmp.american_odd = outcome.american_odd;
-                }
-
-                homeData.Add(odd.bet_type, tmp);
-            }
-            else if (isTotal)
-            {
-                tmp.american_odd = outcome.american_odd;
-                tmp.point = outcome.point;
-                totalData.Add(outcome.name.ToLower(), tmp);
-            }
-            else
-            {
-                if (isSpread)
-                {
-                    tmp.american_odd = outcome.american_odd;
-                    tmp.point = outcome.point;
-
-                }
-                else
-                {
-                    tmp.american_odd = outcome.american_odd;
-                }
-
-                awayData.Add(odd.bet_type, tmp);
-            }
-        }
-    }
-}
  <div class="container border border-info rounded" id="GameOddContainer">
      <div class="d-flex flex-row justify-content-evenly align-items-center p-2">
         <p class="font-weight-bold"">@DateTime.Parse(Model.commence_time).ToString("MM/dd hh:mm")</p>
@@ -65,10 +9,10 @@
                     <p>Team</p>
                 </div>
                 <div class="col">
-                    <p>Spreads</p>
+                    <p>Money</p>
                 </div>
                 <div class="col">
-                    <p>Money</p>
+                    <p>Spreads</p>
                 </div>
                 <div class="col">
                     <p>Totals</p>
@@ -78,54 +22,96 @@
                 <div class="col">
                     <p>@Model.away_team</p>
                 </div>
+                @foreach(Odd o_tmp in Model.odds)
+                {
+                    BetButtonData tmp_a = new BetButtonData();
+                    BetData tmp_away = new BetData();
+                    tmp_away.bet_type = o_tmp.bet_type;
+                    tmp_away.game_id = Model.id;
+                    tmp_away.name = Model.away_team;
+                    Outcome tmp_outcome = new Outcome();
+                    
+                    bool isOver = false;
+                    if (tmp_away.bet_type.Equals("totals", StringComparison.OrdinalIgnoreCase))
+                    {
+                        tmp_outcome = o_tmp.outcomes.FirstOrDefault(m => m.name.Equals("Over", StringComparison.OrdinalIgnoreCase));
+                        isOver = true;
+
+
+                    }
+                    else
+                    {
+                        tmp_outcome = o_tmp.outcomes.FirstOrDefault(m => m.name.Equals(Model.away_team, StringComparison.OrdinalIgnoreCase));
+
+                    }
+
+
+                    if (tmp_outcome != null)
+                    {
+                        tmp_away.price = tmp_outcome.decimal_odd;
+                        if (tmp_outcome.point != null)
+                        {
+                            tmp_away.point = tmp_outcome.point;
+                        }
+
+                    }
+
+                    tmp_a.data = tmp_away;
+                    tmp_a.isOver = isOver;
+
+                    <div class="col">
+                        @{
+                            Html.RenderPartial("_BetButton", tmp_a);
+                        }
+                    </div>
+                }
                 <div class="col">
-                    <button type="button" class="btn btn-outline-info btn-block">
-                        <div class="d-flex flex-column align-items-center">
-                            <p>@awayData["spreads"].point</p>
-                            <p>@awayData["spreads"].american_odd</p>
-                        </div>
-                    </button>
-                </div>
-                <div class="col">
-                    <button type="button" class="btn btn-outline-info btn-block">
-                        <span>@awayData["h2h"].american_odd</span>
-                    </button>
-                </div>
-                <div class="col">
-                    <button type="button" class="btn btn-outline-info btn-block">
-                        <div class="d-flex flex-column">
-                            <p>O @totalData["over"].point</p>
-                            <p>@totalData["over"].american_odd</p>
-                        </div>
-                    </button>
+        
                 </div>
             </div>
             <div class="row align-items-center justify-content-evenly d-flex flex-nowrap pt-2 pb-2" id="home-team">
                 <div class="col">
                     <p>@Model.home_team</p>
                 </div>
-                <div class="col">
-                    <button type="button" class="btn btn-outline-info btn-block">
-                        <div class="d-flex flex-column">
-                            <p>@homeData["spreads"].point</p>
-                            <p>@homeData["spreads"].american_odd</p>
-                        </div>
-                    </button>
-                    
-                </div>
-                <div class="col">
-                    <button type="button" class="btn btn-outline-info btn-block">
-                        <span>@homeData["h2h"].american_odd</span>
-                    </button>
-                </div>
-                <div class="col">
-                    <button type="button" class="btn btn-outline-info btn-block">
-                        <div class="d-flex flex-column">
-                            <p>U @totalData["under"].point</p>
-                            <p>@totalData["under"].american_odd</p>
-                        </div>
-                    </button>
-                </div>
+                @foreach (Odd o_tmp in Model.odds)
+                {
+                    BetButtonData tmp_h = new BetButtonData();
+                    BetData tmp_home = new BetData();
+                    tmp_home.bet_type = o_tmp.bet_type;
+                    tmp_home.game_id = Model.id;
+                    tmp_home.name = Model.home_team;
+                    Outcome tmp_outcome = new Outcome();
+    
+                    if (tmp_home.bet_type.Equals("totals", StringComparison.OrdinalIgnoreCase))
+                    {
+                        tmp_outcome = o_tmp.outcomes.FirstOrDefault(m => m.name.Equals("Under", StringComparison.OrdinalIgnoreCase));
+
+                    }
+                    else
+                    {
+                        tmp_outcome = o_tmp.outcomes.FirstOrDefault(m => m.name.Equals(Model.home_team, StringComparison.OrdinalIgnoreCase));
+
+                    }
+
+                    if (tmp_outcome != null)
+                    {
+                        tmp_home.price = tmp_outcome.decimal_odd;
+                        if (tmp_outcome.point != null)
+                        {
+                            tmp_home.point = tmp_outcome.point;
+                        }
+
+                    }
+
+                    tmp_h.data = tmp_home;
+                    tmp_h.isOver = false;
+
+                    <div class="col">
+                        @{
+                            Html.RenderPartial("_BetButton", tmp_h);
+                        }
+                    </div>
+                }
             </div>
         </div>
     </div>

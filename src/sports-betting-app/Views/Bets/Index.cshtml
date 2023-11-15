@@ -1,14 +1,26 @@
 ﻿@model IEnumerable<GameOdd>
+@using Newtonsoft.Json
+
 @{
     ViewData["Title"] = "Bets Page";
+    string tmp = Context.Session.GetString("wagerList");
+    WagerData wagerList = JsonConvert.DeserializeObject<WagerData>(tmp);
 }
 
 
-<div class="container-fluid" id="betGrid">
+<div class="container-fluid">
+    <div id="betGrid">
     @foreach (GameOdd obj in Model)
     {
         <div id="betGridItem">
             <partial name="_GameOdd" model="obj" />
+        </div>
+    }
+    </div>
+    @if(wagerList.bet_data.Count > 0)
+    {
+        <div class="container">
+            <partial name="_WagerPage" model="@wagerList" />
         </div>
     }
 </div>
