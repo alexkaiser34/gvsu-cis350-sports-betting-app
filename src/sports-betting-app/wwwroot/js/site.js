@@ -65,7 +65,8 @@ function updateWager(val) {
             location.reload();
         },
         error: function (error) {
-            alert(JSON.stringify(error));
+            var tmp = JSON.parse(JSON.stringify(error));
+            alert(tmp.responseJSON.value);
             cache: true;
         }
     });

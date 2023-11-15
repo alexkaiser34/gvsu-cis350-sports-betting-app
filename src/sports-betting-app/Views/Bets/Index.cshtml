@@ -9,19 +9,20 @@
 
 
 <div class="container-fluid">
-    <div id="betGrid">
-    @foreach (GameOdd obj in Model)
-    {
-        <div id="betGridItem">
-            <partial name="_GameOdd" model="obj" />
+        <div id="betGrid">
+        @foreach (GameOdd obj in Model)
+        {
+            <div id="betGridItem">
+                <partial name="_GameOdd" model="obj" />
+            </div>
+        }
         </div>
-    }
-    </div>
-    @if(wagerList.bet_data.Count > 0)
-    {
-        <div class="container">
+        @if(wagerList.bet_data.Count > 0)
+        {
+        <button class="btn btn-primary" id="wagerButton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+                View Wager
+            </button>
             <partial name="_WagerPage" model="@wagerList" />
-        </div>
-    }
+        }    
 </div>
 
