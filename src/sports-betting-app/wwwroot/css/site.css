@@ -94,4 +94,74 @@ body {
 
 #name-container {
     padding-top: 5px;
+#wagerButton {
+    position: fixed;
+    top: 50vh;
+    left: 0px;
+    transform: rotate(90deg);
+}
+
+.bet-item {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid black;
+}
+
+.bet-item div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bet-item h2 {
+    font-size: calc(8px + 0.9vw);
+    font-weight: bold;
+}
+
+.bet-item h3 {
+    font-size: calc(8px + 0.7vw);
+}
+
+.offcanvas-footer{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.wager-footer-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.wager-footer-odds {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.wager-footer-wrapper h3 {
+    font-size: calc(8px + 0.9vw);
+    font-weight: bold;
+}
+
+.wager-footer-wrapper h4 {
+    font-size: calc(8px + 0.8vw);
+}
+
+.wager-footer-amount {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 5px;
+}
+
+.wager-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 12px;
 }
