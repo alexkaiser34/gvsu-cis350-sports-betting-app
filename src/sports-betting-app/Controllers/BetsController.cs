@@ -52,14 +52,16 @@ namespace sports_betting_app.Controllers
             if (tmp == null) {
                 WagerData wager = new WagerData();
                 wager.bet_data = new List<BetData>();
+                IDictionary<string, string> wagerGames = new Dictionary<string, string>();
                 _contextAccessor.HttpContext.Session.SetString("wagerList", JsonConvert.SerializeObject(wager));
+                _contextAccessor.HttpContext.Session.SetString("wagerGames", JsonConvert.SerializeObject(wagerGames));
             }
 
             return View(results);
         }
 
         [HttpPost]
-        public IActionResult updateWagerBet(BetData bet)
+        public async Task<IActionResult> updateWagerBet(BetData bet)
         {
             // retrieve wager list as string
             var tmp = JsonConvert.DeserializeObject<WagerData>(
@@ -81,8 +83,61 @@ namespace sports_betting_app.Controllers
             // save the variable as a string
             _contextAccessor.HttpContext.Session.SetString("wagerList", JsonConvert.SerializeObject(tmp));
 
+
+            
+
+            var tmp_games = JsonConvert.DeserializeObject<IDictionary<string,string>>(
+                _contextAccessor.HttpContext.Session.GetString("wagerGames")
+            );
+                
+
+            if (tmp_games != null)
+            {
+                if (!tmp_games.ContainsKey(bet.game_id))
+                {
+                    var wagerGames = await _api.GetAll("GameOdd/" + bet.game_id);
+
+                    if (wagerGames != null)
+                    {
+                        string home_team = wagerGames[0].home_team.Split(' ').Last();
+                        string away_team = wagerGames[0].away_team.Split(' ').Last();
+                        tmp_games.Add(bet.game_id, home_team + " vs " + away_team);
+                        _contextAccessor.HttpContext.Session.SetString("wagerGames", JsonConvert.SerializeObject(tmp_games));
+                    }
+                }
+            }
+
             return StatusCode(200);
 
         }
+
+        [HttpPost]
+        public IActionResult deleteWagerBet(BetData bet)
+        {
+            // retrieve wager list as string
+            var tmp = JsonConvert.DeserializeObject<WagerData>(
+                _contextAccessor.HttpContext.Session.GetString("wagerList")
+            );
+
+            if (tmp != null)
+            {
+                var betRemove = tmp.bet_data.FirstOrDefault(u => u.game_id.Equals(bet.game_id) && u.bet_type.Equals(bet.bet_type) && u.name.Equals(bet.name));
+
+                if (betRemove != null ) {
+                    tmp.bet_data.Remove(betRemove);
+                }
+                else
+                {
+                    return StatusCode(400, Json("Bet is not in wager"));
+
+                }
+            }
+
+            _contextAccessor.HttpContext.Session.SetString("wagerList", JsonConvert.SerializeObject(tmp));
+
+            return StatusCode(200);
+        }
+
+        
     }
 }

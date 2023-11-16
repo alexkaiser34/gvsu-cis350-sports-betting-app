@@ -62,7 +62,48 @@ function updateWager(val) {
         url: 'Bets/updateWagerBet',
         data: { "bet": val },
         success: function (data) {
+            $("#wagerListWrapper").load(location.href + " #wagerListWrapper");
+
+        },
+        error: function (error) {
+            var tmp = JSON.parse(JSON.stringify(error));
+            alert(tmp.responseJSON.value);
+            cache: true;
+        }
+    });
+
+}
+
+function deleteWager(val) {
+
+    $.ajax({
+        type: "POST",
+        url: 'Bets/deleteWagerBet',
+        data: { "bet": val },
+        success: function (data) {
+            $("#wagerListWrapper").load(location.href + " #wagerListWrapper");
+        },
+        error: function (error) {
+            var tmp = JSON.parse(JSON.stringify(error));
+            alert(tmp.responseJSON.value);
+            cache: true;
+        }
+    });
+
+}
+
+function postWager(val) {
+
+    var amount = parseFloat($('#wager_amount_text').val());
+
+    $.ajax({
+        type: "POST",
+        url: 'Wager/postWager',
+        data: { "wager": val, "amountBet": amount },
+        success: function (data) {
             location.reload();
+            alert("Wager added successfully");
+
         },
         error: function (error) {
             var tmp = JSON.parse(JSON.stringify(error));
