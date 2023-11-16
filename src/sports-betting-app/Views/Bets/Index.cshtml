@@ -17,12 +17,14 @@
             </div>
         }
         </div>
+        <div id="wagerListWrapper">
         @if(wagerList.bet_data.Count > 0)
         {
-        <button class="btn btn-primary" id="wagerButton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+             <button class="btn btn-primary" id="wagerButton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
                 View Wager
             </button>
             <partial name="_WagerPage" model="@wagerList" />
-        }    
+        }
+        </div>
 </div>
 

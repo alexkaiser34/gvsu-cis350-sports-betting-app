@@ -1,4 +1,5 @@
 ﻿@model WagerData
+@using Newtonsoft.Json
 
 @{
     string decimal_to_american(float dec)
@@ -47,28 +48,58 @@
         return (float)Math.Round(multiplier, 2);
     }
 
-    
+    string tmp = Context.Session.GetString("wagerGames");
+    IDictionary<string, string> wagerGames = JsonConvert.DeserializeObject<IDictionary<string, string>>(tmp);
+
+    var theme = Context.Request.Cookies["Theme"];
+    string themeChanger = "";
+    string oppTheme = "";
+    if (theme != null)
+    {
+        if (theme.Equals("dark", StringComparison.OrdinalIgnoreCase)){
+            themeChanger = "dark";
+            oppTheme = "light";
+        }
+        else
+        {
+            themeChanger = "light";
+            oppTheme = "dark";
+        }
+    }
+
 }
 
-<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+<div class="offcanvas offcanvas-start text-bg-@themeChanger" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Wager Slip</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close text-reset btn-@oppTheme" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
         @foreach(BetData bet in Model.bet_data)
         {
             <div class="bet-item">
                 <div>
-                    <h2>@bet.name</h2>
+                    <h2>@wagerGames[bet.game_id]</h2>
+                    <button onclick="deleteWager(@Newtonsoft.Json.JsonConvert.SerializeObject(bet))" type="button" class="btn btn-close btn-@oppTheme" aria-label="Close"></button>
+                </div>
+                <div>
+                    <h3>@bet.name.Split(' ').Last()</h3>
                     <h3>@bet.bet_type</h3>
                 </div>
                 <div>
-                    <h3>@decimal_to_american(bet.price)</h3>
+                    <h3>Odds: @decimal_to_american(bet.price)</h3>
                     @if(bet.point != null)
                     {
-                        <h3>@floatToString(bet.point)</h3>
+                        @if (bet.bet_type.Equals("totals"))
+                        {
+                            <h3>@bet.point</h3>
 
+                        }
+                        else
+                        {
+                            <h3>Point: @floatToString(bet.point)</h3>
+
+                        }
                     }
                 </div>
             </div>
@@ -82,11 +113,11 @@
             </div>
             <div class="wager-footer-amount">
                 <h3>Wager Amount</h3>
-                <input type="text"></input>
+                <input type="number" id="wager_amount_text" />
             </div>
         </div>
         <div class="wager-submit">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="offcanvas">Submit</button>
+            <button onclick="postWager(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))" type="submit" class="btn btn-primary submit-button" data-bs-dismiss="offcanvas">Submit</button>
         </div>
     </div>
 </div>

@@ -36,8 +36,7 @@
                     {
                         tmp_outcome = o_tmp.outcomes.FirstOrDefault(m => m.name.Equals("Over", StringComparison.OrdinalIgnoreCase));
                         isOver = true;
-
-
+                        tmp_away.name = "Over";
                     }
                     else
                     {
@@ -85,7 +84,7 @@
                     if (tmp_home.bet_type.Equals("totals", StringComparison.OrdinalIgnoreCase))
                     {
                         tmp_outcome = o_tmp.outcomes.FirstOrDefault(m => m.name.Equals("Under", StringComparison.OrdinalIgnoreCase));
-
+                        tmp_home.name = "Under";
                     }
                     else
                     {
