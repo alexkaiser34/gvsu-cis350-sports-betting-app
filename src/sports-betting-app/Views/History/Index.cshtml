@@ -1,9 +1,12 @@
-@model string
+@model IEnumerable<Wager>
+
 @{
-    ViewData["Title"] = "History Page";
+  ViewData["Title"] = "Betting History";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@Model</h1>
-    <p>This is the history page.</p>
-</div>
+<h1>Betting History</h1>
+
+@foreach (var wager in Model)
+{
+  // Display wager details
+}
