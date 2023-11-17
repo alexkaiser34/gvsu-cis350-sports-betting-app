@@ -1,31 +1,33 @@
-@model IEnumerable<Wager> 
+@model IEnumerable<Wager>
 
-@{
-  ViewData["Title"] = "Betting History";
-}
-
-<h1>My Betting History</h1>
+<h1>Betting History</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Date</th>  
+      <th>Date</th>
       <th>Game</th>
-      <th>Bet</th>
-      <th>Amount</th>
-      <th>Result</th>
+      <th>Bet Type</th>
+      <th>Bet Selection</th>
+      <th>Odds</th>
+      <th>Amount</th> 
     </tr>
   </thead>
-  
+
   <tbody>
-  @foreach (var wager in Model) {
-    <tr>
-      <td>@wager.DatePlaced</td>
-      <td>@wager.Game.Name</td>
-      <td>@wager.BetSelection</td>
-      <td>@wager.Amount</td>
-      <td>@wager.Outcome</td> 
-    </tr>
+  @foreach (var wager in Model) 
+  {
+    @foreach (var bet in wager.bet_data)
+    {
+      <tr>
+        <td>@wager.date</td>
+        <td>@bet.game_id</td>
+        <td>@bet.bet_type</td>
+        <td>@bet.name</td>
+        <td>@bet.american_odds</td>
+        <td>@wager.wager_amount</td>
+      </tr>
+    }
   }
   </tbody>
 </table>
