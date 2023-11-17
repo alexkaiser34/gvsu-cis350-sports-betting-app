@@ -1,4 +1,6 @@
-﻿using RestSharp;
+﻿using Newtonsoft.Json;
+using RestSharp;
+using sports_betting_app.Models;
 
 namespace sports_betting_app.Data
 {
@@ -13,6 +15,7 @@ namespace sports_betting_app.Data
     {
         Task<List<T>> GetAll(string subURL, List<ApiParam>? apiParams = null);
         Task<RestResponse> Add(T model, string subURL);
+        Task<RestResponse> AddByType<M>(M model, string subURL);
         Task<RestResponse> Update(T model, string subURL);
     }
 
@@ -24,6 +27,7 @@ namespace sports_betting_app.Data
         {
             _RestClient = new RestClient(_baseurl);
         }
+
         public async Task<List<T>> GetAll(string subURL, List<ApiParam>? apiParams = null)
         {
             var req = new RestRequest()
@@ -45,9 +49,9 @@ namespace sports_betting_app.Data
             return response.Data;
         }
 
-
         public async Task<RestResponse> Add(T model, string subURL)
         {
+            
             var req = new RestRequest()
             {
                 Resource = subURL,
@@ -55,6 +59,21 @@ namespace sports_betting_app.Data
             };
 
             req.AddJsonBody(model);
+
+            RestResponse response = await _RestClient.ExecuteAsync(req);
+            return response;
+        }
+
+        public async Task<RestResponse> AddByType<M>(M model, string subURL)
+        {
+
+            var req = new RestRequest()
+            {
+                Resource = subURL,
+                Method = Method.Post
+            };
+
+            req.AddJsonBody(JsonConvert.SerializeObject(model));
             RestResponse response = await _RestClient.ExecuteAsync(req);
             return response;
         }
