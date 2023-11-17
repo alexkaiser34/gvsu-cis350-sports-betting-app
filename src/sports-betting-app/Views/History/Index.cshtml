@@ -1,9 +1,31 @@
-﻿@model string
+@model IEnumerable<Wager> 
+
 @{
-    ViewData["Title"] = "History Page";
+  ViewData["Title"] = "Betting History";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@Model</h1>
-    <p>This is the history page.</p>
-</div>
+<h1>My Betting History</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>  
+      <th>Game</th>
+      <th>Bet</th>
+      <th>Amount</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+  @foreach (var wager in Model) {
+    <tr>
+      <td>@wager.DatePlaced</td>
+      <td>@wager.Game.Name</td>
+      <td>@wager.BetSelection</td>
+      <td>@wager.Amount</td>
+      <td>@wager.Outcome</td> 
+    </tr>
+  }
+  </tbody>
+</table>
