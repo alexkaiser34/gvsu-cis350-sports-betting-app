@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using sports_betting_app.Models
+@using Newtonsoft.Json
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -13,6 +15,8 @@
     @{
         // use cookie to keep theme specified by user, will expire after one day
         var exists = Context.Request.Cookies.ContainsKey("Theme");
+
+        
 
         if (exists)
         {
@@ -39,11 +43,23 @@
             /** Link light theme by default */
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous">
         }
+
+
     }
 </head>
 <body>
     <header>
         @{
+
+            bool isLoggedIn = Context.Request.Cookies.ContainsKey("sports-bet-user");
+
+            User loggedInUser = new User();
+
+            if (isLoggedIn)
+            {
+                loggedInUser = JsonConvert.DeserializeObject<User>(Context.Request.Cookies["sports-bet-user"]);
+            }
+
             // get current theme
             var currentTheme = "light";
 
@@ -84,7 +100,7 @@
                 default:
                     activeRoute = 0;
                     break;
-            } 
+            }
 
 
             // style the navbar according to the theme
@@ -110,21 +126,39 @@
                                 </li>
                             </ul>
                             <ul class="navbar-nav ms-auto align-items-center">
+                                @if (isLoggedIn)
+                                {
+                                    <li class="nav-item pe-4">
+                                        <div class="d-flex flex-row align-items-center" id="name-container">
+                                            <h2 class="wave">👋</h2>
+                                            <h4 class="name-navbar">@loggedInUser.firstName @loggedInUser.lastName</h4>
+                                        </div>
+                                    </li>
+                                }
                                 <a class="pe-3" id="themeLink" onclick="changeTheme();">
                                     <i class="bi bi-sun-fill h4 text-warning"></i>
                                 </a>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle @(activeRoute == 3 ? "active" : "")" id="account-dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="bi bi-person-circle h2"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end bg-primary" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" asp-controller="Settings" asp-action="Index">Settings</a>
-                                        <a class="dropdown-item" asp-controller="UserRegistration" asp-action="Index">Sign up</a>
-                                    </div>
+                                    @if (isLoggedIn)
+                                    {
+                                        <a class="nav-link dropdown-toggle @(activeRoute == 3 ? "active" : "")" id="account-dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="bi bi-person-circle h2"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-end bg-primary" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" asp-controller="Settings" asp-action="Index">Settings</a>
+                                            <a class="dropdown-item" asp-controller="UserRegistration" asp-action="Index">Log Out</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="UserRegistration" asp-action="Index">
+                                            <button type="button" class="btn btn-dark">
+                                                <span>Sign Up</span>
+                                            </button>
+                                        </a>
+                                    }
                                 </li>
                             </ul>
-
-
                         </div>
                     </div>
                 </nav>
@@ -151,27 +185,46 @@
                                 </li>
                             </ul>
                             <ul class="navbar-nav ms-auto align-items-center">
+                                @if (isLoggedIn)
+                                {
+                                    <li class="nav-item pe-4">
+                                        <div class="d-flex flex-row align-items-center" id="name-container">
+                                            <h2 class="wave">👋</h2>
+                                            <h4 class="name-navbar">@loggedInUser.firstName @loggedInUser.lastName</h4>
+                                        </div>
+                                    </li>
+                                }
                                 <a class="pe-3" id="themeLink" onclick="changeTheme();">
                                     <i class="bi bi-moon-stars h4"></i>
                                 </a>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle @(activeRoute == 3 ? "active" : "")" id="account-dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="bi bi-person-circle h2"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end bg-light" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" asp-controller="Settings" asp-action="Index">Settings</a>
-                                        <a class="dropdown-item" asp-controller="UserRegistration" asp-action="Index">Sign up</a>
-                                    </div>
+                                    @if (isLoggedIn)
+                                    {
+                                        <a class="nav-link dropdown-toggle @(activeRoute == 3 ? "active" : "")" id="account-dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="bi bi-person-circle h2"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-end bg-light" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" asp-controller="Settings" asp-action="Index">Settings</a>
+                                            <a class="dropdown-item" asp-controller="UserRegistration" asp-action="Index">Log Out</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="UserRegistration" asp-action="Index">
+                                            <button type="button" class="btn btn-dark">
+                                                <span>Sign Up</span>
+                                            </button>
+                                        </a>
+                                    }
+
                                 </li>
                             </ul>
-
-
                         </div>
                     </div>
                 </nav>
             }
         }
-        
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
