@@ -21,6 +21,12 @@ namespace sports_betting_app.Controllers
             return View(tmp);
         }
 
+        public IActionResult LogOut()
+        {
+            Response.Cookies.Delete("sports-bet-user");
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpPost]
         public async Task<IActionResult> Register(UserData user)
         {
