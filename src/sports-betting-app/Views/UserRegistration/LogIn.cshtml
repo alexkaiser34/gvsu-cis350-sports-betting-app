@@ -1,0 +1,43 @@
+﻿@model UserData
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section Scripts {
+    <script>
+        $('input').on('blur keyup change', function () {
+            if ($("#userLoginForm").valid()) {
+                $('#submitExistingButton').prop('disabled', false);
+            } else {
+                $('#submitExistingButton').prop('disabled', true);
+            }
+        });
+    </script>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error</strong> @TempData["ErrorMessage"]
+        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<div class="container">
+    <div class="d-flex w-100 align-items-center justify-content-center">
+        <h2>Log in</h2>
+    </div>
+    <form class="was-validated" asp-controller="UserRegistration" asp-action="logInExisting" method="post" id="userLoginForm">
+        <div class="form-group">
+            <label for="userName">User Name</label>
+            <input asp-for="UserName" class="form-control" id="userName" name="userName" required placeholder="Enter a username..." />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input asp-for="Password" type="password" class="form-control" id="password" name="password" required placeholder="Enter a password..." />
+        </div>
+        <button type="submit" class="btn btn-primary submit-button" id="submitExistingButton" disabled>Sign In</button>
+    </form>
+</div>
