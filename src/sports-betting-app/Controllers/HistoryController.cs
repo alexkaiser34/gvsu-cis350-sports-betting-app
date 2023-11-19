@@ -1,22 +1,29 @@
-﻿public class HistoryController : Controller 
+using Microsoft.AspNetCore.Mvc;
+using sports_betting_app.Data;
+using sports_betting_app.Models;
+
+namespace sports_betting_app.Controllers
 {
 
-  private readonly IAPIClientService<Wager> _api;
-
-  public HistoryController(IAPIClientService<Wager> api)
+  public class HistoryController : Controller
   {
-    _api = api; 
-  }
 
-  public async Task<IActionResult> Index()
-  {
-    string endpoint = "Wager/user";
+    private readonly IAPIClientService<Wager> _api;
+
+    public HistoryController(IAPIClientService<Wager> api) 
+    {
+      _api = api;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+      string endpoint = "Wager/user";
     
-    // Pass in user ID or other params
-    
-    IEnumerable<Wager> results = await _api.GetAll(endpoint, params);
-    
-    return View(results);
+      IEnumerable<Wager> results = await _api.GetAll(endpoint);
+
+      return View(results);
+    }
+
   }
 
 }
