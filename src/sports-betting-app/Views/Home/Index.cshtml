@@ -1,8 +1,29 @@
-﻿@{
+﻿@model List<Wager>
+
+@{
+    var active = Model.FindAll(m => m.completed == true);
+}
+
+@{
     ViewData["Title"] = "Home Page";
 }
 <link rel="stylesheet" href="~/css/homeIndexStyle.css" asp-append-version="true" />
-
+<div>
+    @foreach (Wager obj in active)
+    {
+        <div>
+            <h1>
+                @obj.american_odds
+            </h1>
+            <h1>
+                @obj.wager_amount
+            </h1>
+            <h1>
+                @obj.amount_win
+            </h1>
+        </div>
+    }
+</div>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,9 +32,9 @@
 <body>
 
     <section class="hero-section">
-        <h1>sports_betting_app</h1>
+        <h1 class="animated-header">sports_betting_app</h1>
         <h2>Enhance your game now with strategy and analysis.</h2>
-        <a href="#learn-more" class="btn btn-primary btn-lg">Learn More</a>
+        <a href="#learn-more" class="btn btn-primary btn-lg">Register/Login</a>
             <div class="row">
                 <div class="col-md-4">
                     <div class="coolAnimationBlock">

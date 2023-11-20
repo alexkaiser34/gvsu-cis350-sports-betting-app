@@ -267,3 +267,23 @@
         width: 960px;
     }
 }
+
+/* test */
+@keyframes flowAnimation {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Apply the animation to the header */
+.animated-header {
+    animation: flowAnimation 2s ease-in-out infinite; /* Adjust the duration and easing as needed */
+}
