@@ -8,22 +8,6 @@
     ViewData["Title"] = "Home Page";
 }
 <link rel="stylesheet" href="~/css/homeIndexStyle.css" asp-append-version="true" />
-<div>
-    @foreach (Wager obj in active)
-    {
-        <div>
-            <h1>
-                @obj.american_odds
-            </h1>
-            <h1>
-                @obj.wager_amount
-            </h1>
-            <h1>
-                @obj.amount_win
-            </h1>
-        </div>
-    }
-</div>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +18,7 @@
     <section class="hero-section">
         <h1 class="animated-header">sports_betting_app</h1>
         <h2>Enhance your game now with strategy and analysis.</h2>
-        <a href="#learn-more" class="btn btn-primary btn-lg">Register/Login</a>
+        <a href="UserRegistration" class="btn btn-primary btn-lg">Register/Login</a>
             <div class="row">
                 <div class="col-md-4">
                     <div class="coolAnimationBlock">
@@ -88,7 +72,7 @@
                                     </div>
                                     <div class="coolAnimation_hiddenItem">
                                         <p class="coolAnimation_text">
-                                            Engage with other sports betting winners and enthusiasts.
+                                            See what other users are currently betting on.
                                         </p>
                                     </div>
                                 </li>
@@ -99,78 +83,58 @@
         </div>
     </section>
 
-    <section class="event-section">
+    <section class="latest-wagers">
         <div class="container my-5">
-            <h2 class="text-center mb-4">Upcoming Events</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="event-card">
-                        <img src="event1.jpg" class="card-img-top" alt="Event 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Football Match</h5>
-                            <p class="card-text">Upcoming football match and get tips from experts.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
+            <h1>Latest Wagers</h1>
+            <div>
+                <div class="row align-items-center font-weight-bold d-flex flex-nowrap pb-2" id="odd-header">
+                    <div class="col">
+                        <h2>american_odds</h2>
+                    </div>
+                    <div class="col">
+                        <h2>wager_amount</h2>
+                    </div>
+                    <div class="col">
+                        <h2>amount_win</h2>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="event-card">
-                        <img src="event2.jpg" class="card-img-top" alt="Event 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Football Match</h5>
-                            <p class="card-text">Upcoming football match and get tips from experts.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
+                @foreach (Wager obj in active)
+                {
+                    <div class="row align-items-center font-weight-bold d-flex flex-nowrap pb-2" id="odd-header">
+                        <div class="col">
+                            @{
+                                <h3>@obj.american_odds</h3>
+                            }
+                        </div>
+
+                        <div class="col">
+                            @{
+                                <h3>@obj.wager_amount</h3>
+                            }
+                        </div>
+
+                        <div class="col">
+                            @{
+                                <h3>$ @obj.amount_win</h3>
+                            }
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
     </section>
 
-    <section class="news-section">
+    <section class="analysis-section">
         <div class="container my-5">
-            <h2 class="text-center mb-4">Latest News</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="news-card">
-                        <img src="news1.jpg" class="card-img-top" alt="News 1">
-                        <div class="card-body">
-                            <h5 class="card-title">news title</h5>
-                            <p class="card-text">news information.</p>
-                            <a href="#" class="btn btn-primary">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="news-card">
-                        <img src="news2.jpg" class="card-img-top" alt="News 2">
-                        <div class="card-body">
-                            <h5 class="card-title">news title</h5>
-                            <p class="card-text">news information.</p>
-                            <a href="#" class="btn btn-primary">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="news-card">
-                        <img src="news3.jpg" class="card-img-top" alt="News 3">
-                        <div class="card-body">
-                            <h5 class="card-title">news title</h5>
-                            <p class="card-text">news information.</p>
-                            <a href="#" class="btn btn-primary">Read More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <h2 class="text-center mb-4">Analysis</h2>
+        </div>
+    </section>
+
+    <section class="strategies-section">
+        <div class="container my-5">
+            <h2 class="text-center mb-4">Strategies</h2>
         </div>
     </section>
 
 </body>
 </html>
-
-
-
-
-
-
-
