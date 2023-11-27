@@ -19,8 +19,8 @@
     .hero-section .btn {
     }
 
-/* Event and News section styles */
-.event-card, .news-card {
+/* Latest Wagers section styles */
+.latest-wagers {
     text-align: center;
     height: 100vh;
     display: flex;
@@ -29,17 +29,36 @@
     align-items: center;
 }
 
-    .event-card img, .news-card img {
-        width: 100%;
+    .latest-wagers h1 {
+        font-size: 60px;
     }
 
-    .event-card .card-title, .news-card .card-title {
-        font-size: 20px;
+    .latest-wagers h2 {
+        font-size: 30px;
     }
 
-    .event-card .card-text, .news-card .card-text {
-        font-size: 16px;
+    .latest-wagers h3 {
+        font-size: 15px;
     }
+
+/* Analysis section Style */
+.analysis-section {
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.strategies-section {
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 /*Cool animation a word then it has a blue background with text*/
 .coolFormatContainer {
