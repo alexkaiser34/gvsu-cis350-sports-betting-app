@@ -20,10 +20,18 @@ namespace sports_betting_app.Controllers
         [HttpPost]
         public async Task<IActionResult> postWager(WagerData wager, float amountBet)
         {
+
+            User loggedInUser = JsonConvert.DeserializeObject<User>(Request.Cookies["sports-bet-user"]);
+            if (loggedInUser == null)
+            {
+                return StatusCode(200);
+            }
             wager.wager_amount = (float)Math.Round((double)amountBet, 2);
 
+
+
             // hard code for right now
-            wager.user_id = "1";
+            wager.user_id = loggedInUser.id;
 
             // add wager to database
             await _api.Add(wager, "Wager/Post");

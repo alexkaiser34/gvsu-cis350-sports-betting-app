@@ -5,6 +5,9 @@ using RestSharp;
 using System.Web;
 using Microsoft.AspNetCore.Http.Extensions;
 using sports_betting_app.Data;
+using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
+using System;
 
 namespace sports_betting_app.Controllers
 {
@@ -17,10 +20,27 @@ namespace sports_betting_app.Controllers
             _api = api;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            string data = "this is some test data";
-            return View((object)data);
+            if (Request.Cookies["sports-bet-user"] == null)
+            {
+                return View(new List<Wager>());
+            }
+            User loggedInUser = JsonConvert.DeserializeObject<User>(Request.Cookies["sports-bet-user"]);
+
+            if (loggedInUser != null) 
+            {
+                string endpoint = "Wager/user/" + loggedInUser.id;
+                List<Wager> results = await _api.GetAll(endpoint);
+                List<Wager> activeWagers = results.FindAll(m => m.completed == false);
+                return View(activeWagers);
+
+            }
+
+            return View(new List<Wager>());
+            
+
+            
         }
 
         public IActionResult Privacy()
