@@ -3,8 +3,8 @@
  <div class="container border border-info rounded" id="GameOddContainer">
      <div class="d-flex flex-row justify-content-evenly align-items-center p-2">
         <p class="font-weight-bold"">@DateTime.Parse(Model.commence_time).ToString("MM/dd hh:mm")</p>
-        <div class="container" id="game-odd-@Model.id">
-            <div class="row align-items-center font-weight-bold d-flex flex-nowrap pb-2" id="odd-header">
+        <div class="container-fluid d-flex flex-column" id="game-odd-@Model.id">
+            <div class="row align-items-center justify-content-center pb-2" id="odd-header">
                 <div class="col">
                     <p>Team</p>
                 </div>
@@ -18,7 +18,7 @@
                     <p>Totals</p>
                 </div>
             </div>
-            <div class="row align-items-center justify-content-evenly d-flex flex-nowrap pb-2" id="away-team">
+            <div class="row align-items-center justify-content-center pb-2" id="away-team">
                 <div class="col">
                     <p>@Model.away_team</p>
                 </div>
@@ -64,11 +64,8 @@
                         }
                     </div>
                 }
-                <div class="col">
-        
-                </div>
             </div>
-            <div class="row align-items-center justify-content-evenly d-flex flex-nowrap pt-2 pb-2" id="home-team">
+            <div class="row align-items-center justify-content-center pb-2" id="home-team">
                 <div class="col">
                     <p>@Model.home_team</p>
                 </div>
