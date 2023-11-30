@@ -14,6 +14,8 @@ namespace sports_betting_app.Data
     public interface IAPIClientService<T> where T : class
     {
         Task<List<T>> GetAll(string subURL, List<ApiParam>? apiParams = null);
+
+        Task<List<M>> GetByType<M>(string subURL, List<ApiParam>? apiParams = null);
         Task<RestResponse> Add(T model, string subURL);
         Task<RestResponse> AddByType<M>(M model, string subURL);
         Task<RestResponse> Update(T model, string subURL);
@@ -46,6 +48,27 @@ namespace sports_betting_app.Data
             }
 
             var response = await _RestClient.ExecuteAsync<List<T>>(req);
+            return response.Data;
+        }
+
+        public async Task<List<M>> GetByType<M>(string subURL, List<ApiParam>? apiParams = null)
+        {
+            var req = new RestRequest()
+            {
+                Resource = subURL,
+                Method = Method.Get,
+                RequestFormat = DataFormat.Json
+            };
+
+            if (apiParams != null)
+            {
+                foreach (ApiParam qp in apiParams)
+                {
+                    req.AddQueryParameter(qp.key, qp.value);
+                }
+            }
+
+            var response = await _RestClient.ExecuteAsync<List<M>>(req);
             return response.Data;
         }
 

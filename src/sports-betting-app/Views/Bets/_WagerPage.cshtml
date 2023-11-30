@@ -48,8 +48,6 @@
         return (float)Math.Round(multiplier, 2);
     }
 
-    string tmp = Context.Session.GetString("wagerGames");
-    IDictionary<string, string> wagerGames = JsonConvert.DeserializeObject<IDictionary<string, string>>(tmp);
 
     var theme = Context.Request.Cookies["Theme"];
     string themeChanger = "";
@@ -79,7 +77,7 @@
         {
             <div class="bet-item">
                 <div>
-                    <h2>@wagerGames[bet.game_id]</h2>
+                    <h2>@bet.gameTitle</h2>
                     <button onclick="deleteWager(@Newtonsoft.Json.JsonConvert.SerializeObject(bet))" type="button" class="btn btn-close btn-@oppTheme" aria-label="Close"></button>
                 </div>
                 <div>

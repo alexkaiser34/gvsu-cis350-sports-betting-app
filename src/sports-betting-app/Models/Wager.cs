@@ -47,5 +47,7 @@ namespace sports_betting_app.Models
         public string name { get; set; }
         public float price { get; set; }
         public float? point { get; set; }
+
+        public string gameTitle { get; set; }
     }
 }
