@@ -166,3 +166,9 @@ body {
     justify-content: center;
     padding-top: 12px;
 }
+
+#betButton {
+    height: 100%;
+    width: 100%;
+}
+

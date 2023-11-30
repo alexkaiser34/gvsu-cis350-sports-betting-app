@@ -37,7 +37,7 @@
     }
 
 }
-<button onclick="updateWager(@Newtonsoft.Json.JsonConvert.SerializeObject(Model.data))" type="button" class="btn btn-outline-info btn-block">
+<button onclick="updateWager(@Newtonsoft.Json.JsonConvert.SerializeObject(Model.data))" type="button" class="btn btn-outline-info btn-block" id="betButton">
 
     @switch (Model.data.bet_type)
     {
