@@ -52,9 +52,7 @@ namespace sports_betting_app.Controllers
             if (tmp == null) {
                 WagerData wager = new WagerData();
                 wager.bet_data = new List<BetData>();
-                IDictionary<string, string> wagerGames = new Dictionary<string, string>();
                 _contextAccessor.HttpContext.Session.SetString("wagerList", JsonConvert.SerializeObject(wager));
-                _contextAccessor.HttpContext.Session.SetString("wagerGames", JsonConvert.SerializeObject(wagerGames));
             }
 
             return View(results);
@@ -77,6 +75,16 @@ namespace sports_betting_app.Controllers
                 {
                     return StatusCode(400, Json("Bet is already in wager"));
                 }
+
+                var wagerGames = await _api.GetAll("GameOdd/" + bet.game_id);
+                var tmp_game = wagerGames.Find(m => m.id == bet.game_id);
+                if (tmp_game != null)
+                {
+                    string home_team = tmp_game.home_team.Split(' ').Last();
+                    string away_team = tmp_game.away_team.Split(' ').Last();
+                    bet.gameTitle = home_team + " vs " + away_team;
+                }
+
                 tmp.bet_data.Add(bet);
             }
 
@@ -86,26 +94,7 @@ namespace sports_betting_app.Controllers
 
             
 
-            var tmp_games = JsonConvert.DeserializeObject<IDictionary<string,string>>(
-                _contextAccessor.HttpContext.Session.GetString("wagerGames")
-            );
-                
 
-            if (tmp_games != null)
-            {
-                if (!tmp_games.ContainsKey(bet.game_id))
-                {
-                    var wagerGames = await _api.GetAll("GameOdd/" + bet.game_id);
-
-                    if (wagerGames != null)
-                    {
-                        string home_team = wagerGames[0].home_team.Split(' ').Last();
-                        string away_team = wagerGames[0].away_team.Split(' ').Last();
-                        tmp_games.Add(bet.game_id, home_team + " vs " + away_team);
-                        _contextAccessor.HttpContext.Session.SetString("wagerGames", JsonConvert.SerializeObject(tmp_games));
-                    }
-                }
-            }
 
             return StatusCode(200);
 
