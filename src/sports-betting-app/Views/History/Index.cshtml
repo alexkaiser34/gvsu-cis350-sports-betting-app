@@ -163,7 +163,7 @@
                 data: {
                     labels: @Html.Raw(Json.Serialize(graphData.Keys.ToList())), // Extracting BetType values
                     datasets: [{
-                        label: 'Amount Won',
+                        label: 'Net Profit',
                         data: @Html.Raw(Json.Serialize(graphData.Values.ToList())), // Extracting Amount values
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgba(75, 192, 192, 1)',
