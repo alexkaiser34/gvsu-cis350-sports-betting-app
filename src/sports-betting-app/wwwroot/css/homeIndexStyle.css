@@ -1,45 +1,30 @@
 ﻿/* Hero section styles */
 .hero-section {
     text-align: center;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+.hero-section h1 {
+    font-size: calc(20px + 3vh + 3vw);
+}
 
-    .hero-section h1 {
-        font-size: 130px;
-    }
+.hero-section h2 {
+}
 
-    .hero-section h2 {
-        font-size: 30px;
-    }
-
-    .hero-section .btn {
-    }
+.hero-section .btn {
+}
 
 /* Latest Wagers section styles */
 .latest-wagers {
     text-align: center;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-top: 20px;
 }
-
-    .latest-wagers h1 {
-        font-size: 60px;
-    }
-
-    .latest-wagers h2 {
-        font-size: 30px;
-    }
-
-    .latest-wagers h3 {
-        font-size: 15px;
-    }
 
 /* Analysis section Style */
 .analysis-section {
@@ -53,7 +38,6 @@
 
 .strategies-section {
     text-align: center;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -62,7 +46,6 @@
 
 /*Cool animation a word then it has a blue background with text*/
 .coolFormatContainer {
-    width: 900px;
     margin: 0 auto;
 }
 
@@ -274,18 +257,6 @@
 @media only screen and (max-width: 479px) {
 }
 
-@media (min-width: 768px) and (max-width: 979px) {
-    .coolFormatContainer {
-        width: 750px;
-    }
-}
-
-@media (min-width: 980px) and (max-width: 1161px) {
-    .coolFormatContainer {
-        width: 960px;
-    }
-}
-
 /* test */
 @keyframes flowAnimation {
     0% {
@@ -304,4 +275,80 @@
 /* Apply the animation to the header */
 .animated-header {
     animation: flowAnimation 2s ease-in-out infinite;
+}
+
+
+.flip-card {
+    background-color: transparent;
+    max-width: 300px;
+    min-width: 100px;
+    height: 25vh;
+    max-height: 100px;
+    min-height: 200px;
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+    display: flex;
+    background-color: dodgerblue;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 10px 10px;
+}
+
+/* Style the back side */
+.flip-card-back {
+    background-color: dodgerblue;
+    color: white;
+    transform: rotateY(180deg);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    padding: 10px 10px;
+}
+
+.flip-card h3 {
+    font-size: calc(10px + 1vw);
+}
+.cardHeader {
+    font-size: calc(12px + 1vw);
+    font-weight: bolder;
+}
+
+#test-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logIn-text {
+    font-size: calc(20px + 1vw);
+    opacity: 0.8;
 }
