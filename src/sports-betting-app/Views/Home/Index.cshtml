@@ -129,76 +129,83 @@
             {
                 <h1 class="pb-3">Active Wagers</h1>
 
-                <table class="table table-@theme.ToLower() p-5">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Bet Data</th>
-                            <th>Bet Odds</th>
-                            <th>Amount Bet</th>
-                            <th>Amount Won</th>
-                            <th>Finished?</th>
-                            <!-- Add more headers as needed -->
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+                @if (Model.Count > 0)
+                {
+                    <table class="table table-@theme.ToLower() p-5">
+                        <thead>
                             <tr>
-                                <td>@DateTime.Parse(item.date).ToString("MM/dd")</td>
-
-                                <td>
-                                    <div class="d-flex align-items-center justify-content-evenly">
-                                        <div class="d-flex flex-row flex-nowrap align-items-center p-2" style="max-width: 400px; overflow: auto;">
-                                            @foreach (var data in item.bet_data)
-                                            {
-                                                <div class="d-flex flex-column align-items-center justify-content-evenly p-2" style="outline: 2px solid rgba(75, 192, 192, 0.2);">
-                                                    <div class="d-flex flex-row p-2">
-                                                        <span style="font-weight: bolder">@data.gameTitle</span>
-                                                    </div>
-                                                    <div class="d-flex flex-row p-2">
-                                                        <span style="font-weight: bolder">@data.bet_type</span>
-                                                    </div>
-                                                    <div class="d-flex flex-row flex-nowrap align-items-center justify-content-between p-2">
-                                                        <div class="d-flex flex-column flex-nowrap align-items-center pe-5">
-                                                            <span style="font-weight: bolder;">Odds</span>
-                                                            <span>@decimal_to_american(data.price)</span>
-                                                        </div>
-                                                        <div class="d-flex flex-column flex-nowrap align-items-center ps-2">
-                                                            <span style="font-weight: bolder;">@data.name.Split(' ').Last()</span>
-                                                            @if (data.bet_type.Equals("totals"))
-                                                            {
-                                                                <span>@data.point</span>
-
-                                                            }
-                                                            else
-                                                            {
-                                                                <span>@floatToString(data.point)</span>
-
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-
-                                </td>
-                                <td>@floatToString(item.american_odds)</td>
-                                <td>@item.wager_amount</td>
-                                @if (item.completed)
-                                {
-                                    <td>@(item.amount_win + item.wager_amount)</td>
-                                }
-                                else
-                                {
-                                    <td>@item.amount_win</td>
-                                }
-                                <td>@item.completed</td>
+                                <th>Date</th>
+                                <th>Bet Data</th>
+                                <th>Bet Odds</th>
+                                <th>Amount Bet</th>
+                                <th>Amount Won</th>
+                                <th>Finished?</th>
+                                <!-- Add more headers as needed -->
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@DateTime.Parse(item.date).ToString("MM/dd")</td>
+
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-evenly">
+                                            <div class="d-flex flex-row flex-nowrap align-items-center p-2" style="max-width: 400px; overflow: auto;">
+                                                @foreach (var data in item.bet_data)
+                                                {
+                                                    <div class="d-flex flex-column align-items-center justify-content-evenly p-2" style="outline: 2px solid rgba(75, 192, 192, 0.2);">
+                                                        <div class="d-flex flex-row p-2">
+                                                            <span style="font-weight: bolder">@data.gameTitle</span>
+                                                        </div>
+                                                        <div class="d-flex flex-row p-2">
+                                                            <span style="font-weight: bolder">@data.bet_type</span>
+                                                        </div>
+                                                        <div class="d-flex flex-row flex-nowrap align-items-center justify-content-between p-2">
+                                                            <div class="d-flex flex-column flex-nowrap align-items-center pe-5">
+                                                                <span style="font-weight: bolder;">Odds</span>
+                                                                <span>@decimal_to_american(data.price)</span>
+                                                            </div>
+                                                            <div class="d-flex flex-column flex-nowrap align-items-center ps-2">
+                                                                <span style="font-weight: bolder;">@data.name.Split(' ').Last()</span>
+                                                                @if (data.bet_type.Equals("totals"))
+                                                                {
+                                                                    <span>@data.point</span>
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span>@floatToString(data.point)</span>
+
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                    <td>@floatToString(item.american_odds)</td>
+                                    <td>@item.wager_amount</td>
+                                    @if (item.completed)
+                                    {
+                                        <td>@(item.amount_win + item.wager_amount)</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.amount_win</td>
+                                    }
+                                    <td>@item.completed</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <h1 class="logIn-text">You do not have any active wagers! Navigate to the "bets" page to place some bets!</h1>
+                }
             }
             else
             {
