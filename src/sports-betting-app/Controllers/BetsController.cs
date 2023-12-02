@@ -27,7 +27,7 @@ namespace sports_betting_app.Controllers
             ApiParam current = new ApiParam()
             {
                 key = "begin",
-                value = DateTime.Now.ToString("yyyy-MM-dd")
+                value = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")
             };
 
             ApiParam nextWeek = new ApiParam()
