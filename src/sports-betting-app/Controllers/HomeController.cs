@@ -33,6 +33,7 @@ namespace sports_betting_app.Controllers
                 string endpoint = "Wager/user/" + loggedInUser.id;
                 List<Wager> results = await _api.GetAll(endpoint);
                 List<Wager> activeWagers = results.FindAll(m => m.completed == false);
+                activeWagers.Sort((x, y) => y.date.CompareTo(x.date));
                 return View(activeWagers);
 
             }
