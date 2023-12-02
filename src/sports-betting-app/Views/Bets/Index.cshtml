@@ -9,22 +9,32 @@
 
 
 <div class="container-fluid">
+    @if(Model.Count() <= 0)
+    {
+        <div class="text-center">
+            <h1 style="opacity: 0.8;">There are no upcoming NFL games! Check back when it is closer to the NFL season!</h1>
+        </div>
+    }
+    else
+    {
         <div id="betGrid">
-        @foreach (GameOdd obj in Model)
-        {
-            <div id="betGridItem">
-                <partial name="_GameOdd" model="obj" />
-            </div>
-        }
+            @foreach (GameOdd obj in Model)
+            {
+                <div id="betGridItem">
+                    <partial name="_GameOdd" model="obj" />
+                </div>
+            }
         </div>
         <div id="wagerListWrapper">
-        @if(wagerList.bet_data.Count > 0)
-        {
-             <button class="btn btn-primary" id="wagerButton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
-                View Wager
-            </button>
-            <partial name="_WagerPage" model="@wagerList" />
-        }
+            @if (wagerList.bet_data.Count > 0)
+            {
+                <button class="btn btn-primary" id="wagerButton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+                    View Wager
+                </button>
+                <partial name="_WagerPage" model="@wagerList" />
+            }
         </div>
+    }
+    
 </div>
 
