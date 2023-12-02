@@ -61,6 +61,12 @@ namespace sports_betting_app.Controllers
         [HttpPost]
         public async Task<IActionResult> updateWagerBet(BetData bet)
         {
+
+            if (!Request.Cookies.ContainsKey("sports-bet-user"))
+            {
+                return StatusCode(400, Json("Please log in to create a wager!"));
+
+            }
             // retrieve wager list as string
             var tmp = JsonConvert.DeserializeObject<WagerData>(
                 _contextAccessor.HttpContext.Session.GetString("wagerList")
