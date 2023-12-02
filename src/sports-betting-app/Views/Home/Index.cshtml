@@ -1,140 +1,227 @@
 ﻿@model List<Wager>
 
 @{
-    var active = Model.FindAll(m => m.completed == true);
+    ViewData["Title"] = "Home Page";
+    var active = Model.FindAll(m => m.completed == false);
+
+    string decimal_to_american(float dec)
+    {
+        int res = 0;
+        if (dec >= 2.0f)
+        {
+            res = (int)Math.Round((dec - 1.0f) * 100.0f);
+        }
+        else
+        {
+            res = (int)Math.Round((-100.0f) / (dec - 1.0f));
+        }
+
+        if (res >= 0)
+        {
+            return "+" + res.ToString();
+        }
+
+        return res.ToString();
+    }
+
+    string floatToString(float? num)
+    {
+        if (num != null)
+        {
+            if (num > 0.0f)
+            {
+                return "+" + num.ToString();
+            }
+            return num.ToString();
+        }
+
+        return "";
+
+    }
+
+
+    IDictionary<string, float> graphData = new Dictionary<string, float>();
+
+    foreach (Wager wager in Model)
+    {
+        string date_tmp = DateTime.Parse(wager.date).ToString("MM/dd");
+        if (graphData.ContainsKey(date_tmp))
+        {
+            graphData[date_tmp] += wager.amount_win;
+        }
+        else
+        {
+            graphData.Add(date_tmp, wager.amount_win);
+        }
+    }
+
+    var themeExists = Context.Request.Cookies.ContainsKey("Theme");
+    string theme = "";
+
+
+    if (themeExists)
+    {
+        theme = Context.Request.Cookies["Theme"];
+    }
+
 }
 
-@{
-    ViewData["Title"] = "Home Page";
-}
-<link rel="stylesheet" href="~/css/homeIndexStyle.css" asp-append-version="true" />
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Page</title>
+    <link rel="stylesheet" href="~/css/homeIndexStyle.css" asp-append-version="true" />
 </head>
 <body>
 
     <section class="hero-section">
-        <h1 class="animated-header">sports_betting_app</h1>
+        <h1 class="animated-header">Wager Watch</h1>
         <h2>Enhance your game now with strategy and analysis.</h2>
         <a href="UserRegistration" class="btn btn-primary btn-lg">Register/Login</a>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="coolAnimationBlock">
-                        <div class="coolFormatContainer">
-                            <ul class="coolAnimationList">
-                                <li class="coolAnimationItem">
-                                    <div class="coolAnimation_visibleItem">
-                                        <div class="coolAnimation_title">
-                                            Analysis
-                                        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="coolAnimationBlock">
+                    <div class="coolFormatContainer">
+                        <ul class="coolAnimationList">
+                            <li class="coolAnimationItem">
+                                <div class="coolAnimation_visibleItem">
+                                    <div class="coolAnimation_title">
+                                        Analysis
                                     </div>
-                                    <div class="coolAnimation_hiddenItem">
-                                        <p class="coolAnimation_text">
-                                            Access insights analysis to make informed bets.
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                                </div>
+                                <div class="coolAnimation_hiddenItem">
+                                    <p class="coolAnimation_text">
+                                        Access insights analysis to make informed bets.
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="coolAnimationBlock">
-                        <div class="coolFormatContainer">
-                            <ul class="coolAnimationList">
-                                <li class="coolAnimationItem">
-                                    <div class="coolAnimation_visibleItem">
-                                        <div class="coolAnimation_title">
-                                            Strategies
-                                        </div>
+            </div>
+            <div class="col-md-4">
+                <div class="coolAnimationBlock">
+                    <div class="coolFormatContainer">
+                        <ul class="coolAnimationList">
+                            <li class="coolAnimationItem">
+                                <div class="coolAnimation_visibleItem">
+                                    <div class="coolAnimation_title">
+                                        Strategies
                                     </div>
-                                    <div class="coolAnimation_hiddenItem">
-                                        <p class="coolAnimation_text">
-                                            Discover and improve upon your past betting moves.
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                                </div>
+                                <div class="coolAnimation_hiddenItem">
+                                    <p class="coolAnimation_text">
+                                        Discover and improve upon your past betting moves.
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="coolAnimationBlock">
-                        <div class="coolFormatContainer">
-                            <ul class="coolAnimationList">
-                                <li class="coolAnimationItem">
-                                    <div class="coolAnimation_visibleItem">
-                                        <div class="coolAnimation_title">
-                                            Community
-                                        </div>
+            </div>
+            <div class="col-md-4">
+                <div class="coolAnimationBlock">
+                    <div class="coolFormatContainer">
+                        <ul class="coolAnimationList">
+                            <li class="coolAnimationItem">
+                                <div class="coolAnimation_visibleItem">
+                                    <div class="coolAnimation_title">
+                                        Watch
                                     </div>
-                                    <div class="coolAnimation_hiddenItem">
-                                        <p class="coolAnimation_text">
-                                            See what other users are currently betting on.
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                                </div>
+                                <div class="coolAnimation_hiddenItem">
+                                    <p class="coolAnimation_text">
+                                        Watch your past betting history.
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
+                </div>
             </div>
         </div>
     </section>
 
     <section class="latest-wagers">
-        <div class="container my-5">
-            <h1>Latest Wagers</h1>
-            <div>
-                <div class="row align-items-center font-weight-bold d-flex flex-nowrap pb-2" id="odd-header">
-                    <div class="col">
-                        <h2>american_odds</h2>
-                    </div>
-                    <div class="col">
-                        <h2>wager_amount</h2>
-                    </div>
-                    <div class="col">
-                        <h2>amount_win</h2>
-                    </div>
-                </div>
-                @foreach (Wager obj in active)
+        <div class="text-center">
+        <h1 class="display-4">Recent Wagers</h1>
+        <canvas id="historyChart" width="400" height="200" class="pb-5"></canvas>
+
+        <table class="table table-@theme.ToLower() p-5">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Bet Data</th>
+                    <th>Bet Odds</th>
+                    <th>Amount Bet</th>
+                    <th>Amount Won</th>
+                    <th>Finished?</th>
+                    <!-- Add more headers as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
                 {
-                    <div class="row align-items-center font-weight-bold d-flex flex-nowrap pb-2" id="odd-header">
-                        <div class="col">
-                            @{
-                                <h3>@obj.american_odds</h3>
-                            }
-                        </div>
+                    <tr>
+                        <td>@DateTime.Parse(item.date).ToString("MM/dd")</td>
 
-                        <div class="col">
-                            @{
-                                <h3>@obj.wager_amount</h3>
-                            }
-                        </div>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-evenly">
+                                <div class="d-flex flex-row flex-nowrap align-items-center p-2" style="max-width: 400px; overflow: auto;">
+                                    @foreach (var data in item.bet_data)
+                                    {
+                                        <div class="d-flex flex-column align-items-center justify-content-evenly p-2" style="outline: 2px solid rgba(75, 192, 192, 0.2);">
+                                            <div class="d-flex flex-row p-2">
+                                                <span style="font-weight: bolder">@data.gameTitle</span>
+                                            </div>
+                                            <div class="d-flex flex-row p-2">
+                                                <span style="font-weight: bolder">@data.bet_type</span>
+                                            </div>
+                                            <div class="d-flex flex-row flex-nowrap align-items-center justify-content-between p-2">
+                                                <div class="d-flex flex-column flex-nowrap align-items-center pe-5">
+                                                    <span style="font-weight: bolder;">Odds</span>
+                                                    <span>@decimal_to_american(data.price)</span>
+                                                </div>
+                                                <div class="d-flex flex-column flex-nowrap align-items-center ps-2">
+                                                    <span style="font-weight: bolder;">@data.name.Split(' ').Last()</span>
+                                                    @if (data.bet_type.Equals("totals"))
+                                                    {
+                                                        <span>@data.point</span>
 
-                        <div class="col">
-                            @{
-                                <h3>$ @obj.amount_win</h3>
-                            }
-                        </div>
-                    </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@floatToString(data.point)</span>
+
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </td>
+                        <td>@floatToString(item.american_odds)</td>
+                        <td>@item.wager_amount</td>
+                        @if (item.completed)
+                        {
+                            <td>@(item.amount_win + item.wager_amount)</td>
+                        }
+                        else
+                        {
+                            <td>@item.amount_win</td>
+                        }
+                        <td>@item.completed</td>
+                    </tr>
                 }
-            </div>
-        </div>
+            </tbody>
+        </table>
+    </div>
     </section>
 
-    <section class="analysis-section">
-        <div class="container my-5">
-            <h2 class="text-center mb-4">Analysis</h2>
-        </div>
-    </section>
-
-    <section class="strategies-section">
-        <div class="container my-5">
-            <h2 class="text-center mb-4">Strategies</h2>
-        </div>
-    </section>
 
 </body>
 </html>

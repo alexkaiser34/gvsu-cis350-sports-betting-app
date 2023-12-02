@@ -62,13 +62,12 @@
 
 /*Cool animation a word then it has a blue background with text*/
 .coolFormatContainer {
-    width: 1142px;
+    width: 900px;
     margin: 0 auto;
 }
 
-
 .coolAnimationBlock {
-    padding: 50px 0 100px
+    padding: 50px 0 90px;
 }
 
 .coolAnimationList {
@@ -93,7 +92,7 @@
 }
 
 .coolAnimationItem {
-    width: 30%;
+    width: 33.33%;
     overflow: hidden;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -135,7 +134,7 @@
     align-items: center;
     height: 100%;
     width: 100%;
-    padding: 35px 65px;
+    padding: 35px 52px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -146,7 +145,7 @@
 }
 
 .coolAnimation_title {
-    font-size: 40px;
+    font-size: 35px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -304,5 +303,5 @@
 
 /* Apply the animation to the header */
 .animated-header {
-    animation: flowAnimation 2s ease-in-out infinite; /* Adjust the duration and easing as needed */
+    animation: flowAnimation 2s ease-in-out infinite;
 }
