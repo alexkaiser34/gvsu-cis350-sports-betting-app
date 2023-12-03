@@ -19,3 +19,7 @@ ASP.NET core MVC sports betting app with Web API.  This application will display
 1. Open Microsoft Visual Studio
 2. Open the project solution (`src/sports-betting-app.sln`)
 3. Click on the Run Button in Visual Studio
+
+
+## Where to find the application
+<a href="https://wagerwatch.alexjkaiser.com/">https://wagerwatch.alexjkaiser.com/</a>
